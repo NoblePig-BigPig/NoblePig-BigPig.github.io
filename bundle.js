@@ -18,3 +18,15 @@ function loadGoogleAnalytics() {
 
 // Call the function to load Google Analytics
 loadGoogleAnalytics();
+
+
+
+const { createApp, ref } = Vue
+createApp({
+    setup() {
+        const message = ref('Hello vue!')
+        return {
+            message
+        }
+    }
+}).mount('#app');
