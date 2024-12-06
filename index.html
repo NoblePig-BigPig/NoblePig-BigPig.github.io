@@ -1,30 +1,101 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE HTML>
+<html>
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>貴族豬豬 & 大豬豬</title>
-    <link type="text/css" rel="stylesheet" href="./index.css" />
+    <!-- 超文本的類型&編碼 -->
+    <meta http-equiv="Content-Type" content="text/html" charset="utf-8" />
+    <!-- 網頁名稱 -->
+    <title>Loading...</title>
+    <!-- 網頁圖標 -->
+    <link rel="shortcut icon" href="" />
+    <!-- 
+        設定視窗的顯示區域，這是行動裝置優化的一個關鍵設定。
+        －width=device-width：讓視窗寬度適應裝置的螢幕寬度。
+        －initial-scale=1：設定初始縮放比例為 1（即不放大或縮小）。
+        －minimum-scale=1：限制最小縮放比例為 1。
+        －maximum-scale=1：限制最大縮放比例為 1。
+        －user-scalable=no：禁止用戶手動縮放頁面。
+        -->
+    <meta name="viewport"
+        content="width=device-width,initial-scale=1, minimum-scale=1, maximum-scale=1, user-scalable=no" />
+    <!-- 讓網頁在行動裝置上運行時，可以像原生應用程序一樣全螢幕顯示，隱藏瀏覽器的地址欄和其他 UI 元素。 -->
+    <meta name="mobile-web-app-capable" content="yes" />
+    <!-- 啟用全螢幕模式，讓網頁內容能夠在螢幕上全螢幕顯示，隱藏瀏覽器的導航欄和工具列。 -->
+    <meta name="full-screen" content="true" />
+    <!-- 強制設置螢幕為直屏顯示。這個屬性通常用於行動裝置上，讓網頁在螢幕旋轉時保持直屏顯示。 -->
+    <meta name="screen-orientation" content="portrait" />
+    <!-- 對於 QQ 瀏覽器的設定，啟用全螢幕模式。x5 是 QQ 瀏覽器的內核名稱。 -->
+    <meta name="x5-fullscreen" content="true" />
+    <!-- 對於 360 瀏覽器的設定，啟用全螢幕模式。 -->
+    <meta name="360-fullscreen" content="true" />
+    <style>
+        html,
+        body {
+            touch-action: none;
+            -ms-touch-action: none;
+            background: #000000;
+            padding: 0;
+            border: 0;
+            margin: 0;
+            height: 100%;
+        }
+
+    </style>
 </head>
 
 <body>
+    <!-- 
+            data-entry-class="Main"
+            代表程序的入口類，也就是遊戲啟動時執行的主類。在此處，Main 是入口類的名稱。
 
-    <head></head>
+            data-orientation="auto"
+            設置螢幕的方向。
+            －auto：自動根據裝置的螢幕方向來適應（橫屏或直屏）。
+            －landscape：強制橫屏顯示。
+            －portrait：強制直屏顯示。
+            
+            data-scale-mode="showAll"
+            設置縮放模式，決定遊戲內容如何適應不同的螢幕解析度。
+            －showAll：保持寬高比，顯示所有內容，可能會在螢幕兩側留黑邊。
+            －noScale：不進行縮放，顯示原始大小。
+            －exactFit：內容拉伸以完全適應螢幕，可能會失去寬高比。
+            －fixedWidth / fixedHeight：固定寬度或高度，另一邊會進行拉伸。
+            
+            data-frame-rate="30"
+            設置遊戲的幀率，即每秒顯示的畫面數。常見幀率為 30 或 60，數值越高畫面越流暢，但對效能的要求也越高。
 
-    <main>
-        <div id="app">{{ message }}</div>
-        <img src="./testImage.jfif" alt="" srcset="">
-    </main>
+            data-content-width="640"
+            設置遊戲內容的寬度，即設計時使用的虛擬寬度。
 
-    <footer>© 2024 NoblePig-BigPig.</footer>
+            data-content-height="1136"
+            設置遊戲內容的高度，即設計時使用的虛擬高度。此寬高比與實際裝置的寬高比不同，可能會根據縮放模式進行調整。
 
-<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2669721590929389"
-     crossorigin="anonymous"></script>
+            data-multi-fingered="2"
+            允許同時使用的多點觸控手指數。這裡設置為 2，表示最多支援兩根手指同時觸控。
 
-    <!-- Google tag (gtag.js) -->
-    <script src="https://unpkg.com/vue@3/dist/vue.global.prod.js"></script>
-    <script src="./src/bundle.js"></script>
+            data-show-fps="false"
+            是否顯示幀率。false 表示不顯示，true 表示顯示幀率。
+
+            data-show-log="false"
+            是否顯示除錯日誌資訊。false 表示不顯示，true 表示顯示日誌。
+
+            data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9"
+            當 data-show-fps 設為 true 時，用於配置幀率顯示的樣式：
+            －x:0, y:0：設置幀率顯示的位置（螢幕左上角）。
+            －size:12：幀率數字的字體大小。
+            －textColor:0xffffff：幀率數字的顏色，使用 16 進位顏色值。
+            －bgAlpha:0.9：幀率背景的透明度，範圍為 0 到 1。
+        -->
+    <div style="margin: auto;width: 100%;height: 100%;" class="egret-player" data-entry-class="GameMain"
+        data-orientation="auto" data-scale-mode="showAll" data-frame-rate="60" data-content-width="1024"
+        data-content-height="576" data-multi-fingered="2" data-show-fps="false" data-show-log="false"
+        data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
+    </div>
+    <!-- 應用的第一畫面 -->
+    <img id="preloadbg"
+        style='position:absolute; height: 100%; width:100%; left:0px; top:0px; right:0px; bottom:0px;' />
+    <!-- 應用的邏輯入口點 -->
+    <script src="./app.bundle.js"></script>
 </body>
 
 </html>
