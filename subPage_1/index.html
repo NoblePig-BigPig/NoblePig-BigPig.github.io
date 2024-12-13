@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Watch Video for Reward</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background: url('background_reward.png') no-repeat center center / cover;
+            color: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .container {
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            border-radius: 10px;
+        }
+
+        .reward-info {
+            margin: 20px 0;
+        }
+
+        .reward-info img {
+            width: 100px;
+            height: 100px;
+        }
+
+        .reward-info h1 {
+            margin: 10px 0;
+            font-size: 24px;
+        }
+
+        button {
+            background-color: #ff9800;
+            border: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            color: #fff;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:disabled {
+            background-color: #aaa;
+        }
+
+        video {
+            display: none;
+            margin-top: 20px;
+            width: 90%;
+            max-width: 600px;
+        }
+
+
+        /**************************/
+        /* 頂部選擇器 Bar */
+        .ad-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background-color: #333;
+            color: #fff;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 10px 20px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+        }
+
+        .ad-bar h1 {
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .ad-bar select {
+            padding: 5px 10px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        /* 廣告內容容器 */
+        .ad-container {
+            margin-top: 60px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .ad-content {
+            padding: 20px;
+            border: 2px dashed #aaa;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            font-size: 18px;
+            color: #555;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- 選擇器 Bar -->
+    <div class="ad-bar">
+        <h1>選擇廣告類型</h1>
+        <select id="adTypeSelector" valu>
+             <option value="none" selected ></option>
+            <option value="reward" >獎勵型廣告</option>
+            <option value="banner">橫幅廣告</option>
+            <option value="video">影片廣告</option>
+        </select>
+    </div>
+
+    <!-- 廣告內容 -->
+    <div class="ad-container">
+        <div id="adContent" class="ad-content">
+            請選擇一種廣告類型。
+        </div>
+
+        <div class="reward-container">
+            <div class="reward-info">
+                <h1>完成任務可獲得：</h1>
+                <img src="./resource/reward_icon.png" alt="Reward Icon">
+                <h1>100 金幣</h1>
+            </div>
+            <button id="playButton">觀看影片</button>
+            <video id="rewardVideo" controls>
+                <source src="sample-video.mp4" type="video/mp4"> 您的瀏覽器不支援影片播放。
+            </video>
+            <h2 id="rewardMessage" style="display:none;">恭喜！您已獲得 100 金幣！</h2>
+</div>
+</div>
+
+<div hidden style="margin: auto;width: 100%;height: 100%;" class="egret-player" data-entry-class="App" data-orientation="auto" data-scale-mode="showAll" data-frame-rate="60" data-content-width="1024"
+data-content-height="576" data-multi-fingered="2" data-show-fps="false" data-show-log="false" data-show-fps-style="x:0,y:0,size:12,textColor:0xffffff,bgAlpha:0.9">
+</div>
+<!-- 應用的邏輯入口點 -->
+<script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2669721590929389" crossorigin="anonymous"></script>
+<script src="./app.bundle.js"></script>
+</body>
+
+</html>
