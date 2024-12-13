@@ -4,13 +4,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Visit Subpage</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 5rem;
+        }
+
+        input,
+        button {
+            font-size: 1.2rem;
+            padding: 0.5rem;
+        }
+
+        .btn {
+            cursor: pointer;
+        }
+
+    </style>
 </head>
 
 <body>
-    <a href="./subPage_1/index.html">subPage1</a>
-    <a href="./subPage_2/index.html">subPage2</a>
-    <a href="./subPage_3/index.html">subPage3</a>
+
+    <h2>Visit Your Subpage</h2>
+    <label for="page-input">Enter Page Number:</label>
+    <input id="page-input" type="number" min="1" placeholder="1">
+    <button class="btn" onclick="visitSubPage()">Go</button>
+
+    <script>
+        function visitSubPage() {
+            const pageNumber = document.getElementById('page-input').value;
+            if (pageNumber && Number(pageNumber) > 0) {
+                window.location.href = `./subPage_${pageNumber}/index.html`;
+            } else {
+                alert('Please enter a valid subpage number!');
+            }
+        }
+    </script>
+
 </body>
 
 </html>
