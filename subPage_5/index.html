@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>湊湊菜單</title>
+    <style>
+        body {
+            display: flex;
+            margin: 0;
+            padding: 0;
+            background-color: #f8f8f8;
+            height: 100vh; /* 设置页面高度为视口高度 */
+        }
+
+        .sidebar {
+            width: 200px; /* 左侧菜单宽度 */
+            background-color: #fff;
+            border-right: 1px solid #ddd;
+            padding: 10px;
+            box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            overflow-y: auto; /* 允许垂直滚动 */
+            height: 100%; /* 使菜单填满整个高度 */
+        }
+
+        .content {
+            flex-grow: 1; /* 右侧内容区域占据剩余空间 */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            max-height: 100%; /* 限制内容区域的最大高度 */
+        }
+
+        img {
+            width: 100%;
+            max-width: 900px; /* 限制每张图片的最大宽度 */
+            border-radius: 8px; /* 添加圆角 */
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 添加阴影效果 */
+            transition: transform 0.2s; /* 添加平滑过渡效果 */
+        }
+
+        img:hover {
+            transform: scale(1.1); /* 鼠标悬停时放大 */
+        }
+    </style>
+</head>
+
+<body>
+    <div class="sidebar">
+        <h2>菜單</h2>
+        <div id="menuContainer">
+            <!-- 菜单项将通过 JavaScript 动态添加 -->
+        </div>
+    </div>
+    <div class="content">
+        <img id="displayedImage" src="" alt="大图" style="display:none;">
+    </div>
+
+    <script>
+        const allMenus = [
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-49545a72-38e4-457e-8c1f-b9ba6a2dec70.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-1bd7fb33-6ca7-4d56-9012-2a84ca416356.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-ddc60ad1-6fd2-4b0e-8e1f-49deb60bded8.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-3bf694f5-a6e6-42f8-9c5f-75131b2ff79f.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-69cdc621-37f1-4331-bfe3-5dbd1e2577cb.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-c4ed6848-e00d-419e-8bc0-7ce234ec5d92.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-fecaa047-df30-4699-a093-6d5409a103a1.png?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-a3132530-ac62-4a69-b238-f7492ab3a2bb.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-8288160a-dc4e-4931-9d0d-e25922c7599e.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-19061a85-f2f9-4e92-8cd8-dc9b68ee1e60.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-5b6ef5b8-3ecc-4dfc-8417-b3502de8deb5.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-00617bcb-82d9-4449-8ce9-8ea22c8181c1.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-8fec6bfb-6bc7-4d35-a06a-ef23ea507700.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-f8ca6ef0-10cb-4605-9871-eaeebdb98a5b.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-2f786284-1c82-4691-b44d-f279ada04b03.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-85346be8-9071-4b8c-a1e1-156dcaaba807.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-05d70071-6da5-4227-a076-7d342c950494.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-ad5512b1-c113-4b1a-88b7-45e0f7662595.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-f71c5825-7596-41b8-ba70-2f682d53550d.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-23a21d02-596a-404a-a91b-37d59822b28d.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-c6a5c080-b7d1-4e3c-a84a-0964f1b71543.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-e73ed26e-f2c6-4ac7-8ae6-23b382e18c31.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-03d345f8-5143-4406-8657-25aec7dd7a51.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-8346ac24-ab69-42c4-81e1-6226b9ade831.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-232cd41b-48bd-4d56-9e67-baeac8626585.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-ce44c533-a5ec-44d0-b50c-693f9bd23daf.jpg?auto=format&dpr=1&fm=jpg",
+            "https://inline.imgix.net/menus/-NuJC-uWH934AZViGJdg:inline-live-3--NuJC06R8DxVrVk6oOgE-587e9f86-56b4-47ed-b4af-c8eecf728b5b.png?auto=format&dpr=1&fm=jpg",
+        ];
+
+        const createTemplate = function (src) {
+            return `
+            <a href="#"
+                onclick="showImage('${src}')">
+                <img src="${src}"
+                    alt="菜單" style="width: 100%; max-width: 200px;">
+            </a>
+            `;
+        };
+
+        const menuContainer = document.getElementById('menuContainer');
+        for (let i = 0; i < allMenus.length; i++) {
+            menuContainer.innerHTML += createTemplate(allMenus[i]);
+        }
+
+        function showImage(src) {
+            const displayedImage = document.getElementById('displayedImage');
+            displayedImage.src = src;
+            displayedImage.style.display = 'block'; // 显示大图
+        }
+
+        showImage(allMenus[0]); // 默认显示第一张图片
+    </script>
+</body>
+
+</html>
