@@ -5,6 +5,87 @@
     console.log(msg);
   }
 
+  // node_modules/.pnpm/jwt-decode@4.0.0/node_modules/jwt-decode/build/esm/index.js
+  var InvalidTokenError = class extends Error {
+  };
+  InvalidTokenError.prototype.name = "InvalidTokenError";
+  function b64DecodeUnicode(str) {
+    return decodeURIComponent(atob(str).replace(/(.)/g, (m, p) => {
+      let code = p.charCodeAt(0).toString(16).toUpperCase();
+      if (code.length < 2) {
+        code = "0" + code;
+      }
+      return "%" + code;
+    }));
+  }
+  function base64UrlDecode(str) {
+    let output = str.replace(/-/g, "+").replace(/_/g, "/");
+    switch (output.length % 4) {
+      case 0:
+        break;
+      case 2:
+        output += "==";
+        break;
+      case 3:
+        output += "=";
+        break;
+      default:
+        throw new Error("base64 string is not of the correct length");
+    }
+    try {
+      return b64DecodeUnicode(output);
+    } catch (err) {
+      return atob(output);
+    }
+  }
+  function jwtDecode(token, options) {
+    if (typeof token !== "string") {
+      throw new InvalidTokenError("Invalid token specified: must be a string");
+    }
+    options || (options = {});
+    const pos = options.header === true ? 0 : 1;
+    const part = token.split(".")[pos];
+    if (typeof part !== "string") {
+      throw new InvalidTokenError(`Invalid token specified: missing part #${pos + 1}`);
+    }
+    let decoded;
+    try {
+      decoded = base64UrlDecode(part);
+    } catch (e) {
+      throw new InvalidTokenError(`Invalid token specified: invalid base64 for part #${pos + 1} (${e.message})`);
+    }
+    try {
+      return JSON.parse(decoded);
+    } catch (e) {
+      throw new InvalidTokenError(`Invalid token specified: invalid json for part #${pos + 1} (${e.message})`);
+    }
+  }
+
+  // src/components/LoginGoogle.ts
+  function newGoogle() {
+    window.onload = () => {
+      const googleSigninButton = document.createElement("div");
+      googleSigninButton.id = "google-signin-button";
+      document.body.appendChild(googleSigninButton);
+      googleSigninButton.innerHTML = "\u767B\u5165Google";
+      googleSigninButton.style.position = "absolute";
+      googleSigninButton.style.left = "0px";
+      googleSigninButton.style.top = "0px";
+      function handleCredentialResponse(response) {
+        const user = jwtDecode(response.credential);
+        console.log(user);
+      }
+      window.google.accounts.id.initialize({
+        client_id: "720820074755-ig831tc864nr5ondgk2m30hl301ct4uo.apps.googleusercontent.com",
+        callback: handleCredentialResponse
+      });
+      window.google.accounts.id.renderButton(
+        googleSigninButton,
+        { theme: "outline", size: "large" }
+      );
+    };
+  }
+
   // node_modules/.pnpm/three@0.172.0/node_modules/three/build/three.core.js
   var REVISION = "172";
   var CullFaceNone = 0;
@@ -19677,6 +19758,7 @@ void main() {
   // src/index.ts
   showMessage("Hello, TypeScript!");
   createUI();
+  newGoogle();
 })();
 /*! Bundled license information:
 
