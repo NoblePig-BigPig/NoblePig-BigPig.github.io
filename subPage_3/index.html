@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="icon" href="./favicon.ico">
+    <title>AI Ethereal Sprite</title>
+    <style>
+        /* 移除所有邊距和填充，確保畫布完全覆蓋視窗 */
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100%;
+            overflow: hidden;
+            /* 防止滾動條 */
+        }
+
+        /* 讓 canvas 填滿整個視窗 */
+        canvas {
+            display: block;
+            width: 100%;
+            height: 100%;
+        }
+
+    </style>
+</head>
+
+<body>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <!-- <div id="google-signin-button"></div>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+        function handleCredentialResponse(response) {
+            const user = jwt_decode(response.credential); // 解碼JWT
+            console.log(user);
+            // 傳送 token 到後端進行驗證
+        }
+
+        window.onload = function () {
+            google.accounts.id.initialize({
+                client_id: '720820074755-ig831tc864nr5ondgk2m30hl301ct4uo.apps.googleusercontent.com',
+                callback: handleCredentialResponse
+            });
+            google.accounts.id.renderButton(
+                document.getElementById("google-signin-button"),
+                { theme: "outline", size: "large" }
+            );
+        }
+    </script> -->
+
+    <script type="module" src="index.js"></script>
+</body>
+
+</html>

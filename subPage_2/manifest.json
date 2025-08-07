@@ -1,0 +1,10 @@
+{
+	"initial": [
+		"js/egret.min_3a39dfa6.js",
+		"js/egret.web.min_d2f51c7d.js",
+		"js/assetsmanager.min_b2ca4c97.js"
+	],
+	"game": [
+		"js/main.min_1d07c7fd.js"
+	]
+}
