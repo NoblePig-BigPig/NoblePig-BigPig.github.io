@@ -1,0 +1,18 @@
+[
+    {
+        "id": 1,
+        "title": "唯一",
+        "artist": "施夷光",
+        "audioSrc": "songs/1/music.mp3",
+        "artworkSrc": "songs/1/avatar.jpg",
+        "lyricsSrc": "songs/1/lyrics.json"
+    },
+    {
+        "id": 2,
+        "title": "唯一",
+        "artist": "鄧紫棋",
+        "audioSrc": "songs/2/music.mp3",
+        "artworkSrc": "songs/2/avatar.jpg",
+        "lyricsSrc": "songs/2/lyrics.json"
+    }
+]

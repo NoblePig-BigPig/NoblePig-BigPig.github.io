@@ -9,18 +9,38 @@
 </head>
 
 <body>
-    <div class="sakura-container"></div>
+    <div class="background-container">
+        <div class="sakura-container"></div>
+    </div>
+    <div class="playlist-container">
+        <div class="playlist-header">
+            <span>播放列表</span>
+            <button class="playlist-toggle-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-chevron-down">
+                    <polyline points="6 9 12 15 18 9"></polyline>
+                </svg>
+            </button>
+        </div>
+        <ul class="playlist"></ul>
+    </div>
     <div class="player">
         <div class="album-art">
-            <img src="avatar.jpg" alt="Album Art" id="album-art-img">
+            <img src="" alt="Album Art" id="album-art-img">
         </div>
         <div class="player-controls">
+            <div class="lyrics-container">
+                <div class="lyrics"></div>
+            </div>
             <div class="song-info">
-                <h2 class="song-title">唯一</h2>
-                <p class="artist-name">施夷光</p>
+                <h2 class="song-title"></h2>
+                <p class="artist-name"></p>
             </div>
             <div class="progress-bar">
                 <div class="progress"></div>
+            </div>
+            <div class="time-container">
+                <span class="current-time">0:00</span>
+                <span class="total-time">0:00</span>
             </div>
             <div class="buttons">
                 <button class="prev-btn">
@@ -48,7 +68,7 @@
                 </button>
             </div>
         </div>
-        <audio src="music.mp3" id="audio-player"></audio>
+        <audio id="audio-player"></audio>
     </div>
     <script src="script.js"></script>
 </body>
