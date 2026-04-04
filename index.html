@@ -1,203 +1,445 @@
 <!DOCTYPE html>
-<html lang="en">
-
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Project Showcase</title>
+    <title>趙敬瑋 | 遊戲前端 & Agent 工程師 Portfolio</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Outfit:wght@300;600;800&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
     <style>
         :root {
-            --primary-color: #ffffff;
-            --secondary-color: #a7a2a2;
-            --background-color: #121212;
-            --card-background: rgba(255, 255, 255, 0.05);
-            --card-hover-background: rgba(255, 255, 255, 0.1);
-            --border-color: rgba(255, 255, 255, 0.15);
-            --shadow-color: rgba(0, 0, 0, 0.5);
+            --bg-dark: #0a0a0c;
+            --bg-card: rgba(255, 255, 255, 0.03);
+            --border-card: rgba(255, 255, 255, 0.1);
+            --accent-blue: #3b82f6;
+            --accent-cyan: #06b6d4;
+            --accent-green: #10b981;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --font-main: 'Inter', sans-serif;
+            --font-heading: 'Outfit', sans-serif;
+            --font-mono: 'Fira Code', monospace;
         }
 
         * {
-            box-sizing: border-box;
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
         }
 
         body {
-            font-family: 'Poppins', sans-serif;
-            color: var(--primary-color);
-            background-color: var(--background-color);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            padding: 2rem;
-            overflow-y: auto;
-            position: relative;
+            background-color: var(--bg-dark);
+            color: var(--text-primary);
+            font-family: var(--font-main);
+            line-height: 1.6;
+            overflow-x: hidden;
         }
 
-        body::before {
-            content: '';
-            position: absolute;
+        /* Background Effects */
+        .bg-gradient {
+            position: fixed;
             top: 0;
             left: 0;
-            right: 0;
-            bottom: 0;
-            background: linear-gradient(45deg, #ff00ff, #00ffff, #ff00ff, #00ffff);
-            background-size: 400% 400%;
-            animation: gradientAnimation 15s ease infinite;
-            opacity: 0.1;
+            width: 100%;
+            height: 100%;
+            background: 
+                radial-gradient(circle at 20% 20%, rgba(59, 130, 246, 0.05) 0%, transparent 40%),
+                radial-gradient(circle at 80% 80%, rgba(6, 182, 212, 0.05) 0%, transparent 40%);
             z-index: -1;
         }
 
-        @keyframes gradientAnimation {
-            0% {
-                background-position: 0% 50%;
-            }
-
-            50% {
-                background-position: 100% 50%;
-            }
-
-            100% {
-                background-position: 0% 50%;
-            }
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 1.5rem;
         }
 
-        .container {
-            width: 100%;
-            max-width: 1200px;
+        /* Hero Section */
+        header {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
+            padding-top: 2rem;
+        }
+
+        .hero-badge {
+            font-family: var(--font-mono);
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-blue);
+            padding: 0.5rem 1rem;
+            border-radius: 99px;
+            font-size: 0.85rem;
+            margin-bottom: 1.5rem;
+            border: 1px solid rgba(59, 130, 246, 0.2);
+            backdrop-filter: blur(4px);
         }
 
         h1 {
-            font-size: 3rem;
+            font-family: var(--font-heading);
+            font-size: clamp(2.5rem, 8vw, 4.5rem);
+            font-weight: 800;
+            letter-spacing: -0.02em;
+            background: linear-gradient(to right, #fff, var(--accent-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .hero-role {
+            font-size: clamp(1.1rem, 3vw, 1.5rem);
+            color: var(--text-secondary);
+            max-width: 700px;
+            margin-bottom: 2.5rem;
+        }
+
+        .hero-role span {
+            color: var(--text-primary);
             font-weight: 600;
-            margin-bottom: 3rem;
-            text-shadow: 0 4px 10px var(--shadow-color);
         }
 
-        .gallery {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 2rem;
-        }
-
-        .card {
-            background: var(--card-background);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            overflow: hidden;
-            text-decoration: none;
-            color: var(--primary-color);
-            transition: transform 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-            backdrop-filter: blur(10px);
-            -webkit-backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px 0 var(--shadow-color);
-        }
-
-        .card:hover {
-            transform: translateY(-10px);
-            background: var(--card-hover-background);
-            box-shadow: 0 16px 40px 0 var(--shadow-color);
-        }
-
-        .card-image {
-            height: 200px;
-            background-color: rgba(255, 255, 255, 0.1);
+        .cta-group {
             display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
             justify-content: center;
-            align-items: center;
         }
 
-        .card-image img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        .card-image .placeholder {
-            font-size: 1.2rem;
-            color: var(--secondary-color);
-        }
-
-        .card-content {
-            padding: 1.5rem;
-        }
-
-        .card-content h3 {
-            font-size: 1.5rem;
+        .btn {
+            padding: 0.8rem 2rem;
+            border-radius: 8px;
             font-weight: 600;
+            text-decoration: none;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: var(--accent-blue);
+            color: white;
+            box-shadow: 0 4px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 25px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--border-card);
+            color: var(--text-primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--bg-card);
+            border-color: var(--text-secondary);
+        }
+
+        /* Expertise Grid */
+        .section-title {
+            font-family: var(--font-heading);
+            font-size: 2rem;
+            margin-bottom: 3rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 40px;
+            height: 3px;
+            background: var(--accent-blue);
+        }
+
+        .expertise-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 8rem;
+        }
+
+        .skill-card {
+            background: var(--bg-card);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-card);
+            transition: all 0.3s ease;
+            backdrop-filter: blur(10px);
+        }
+
+        .skill-card:hover {
+            border-color: var(--accent-blue);
+            transform: translateY(-5px);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .skill-icon {
+            font-size: 2rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .skill-card h3 {
+            font-family: var(--font-heading);
             margin-bottom: 0.5rem;
+            color: var(--accent-blue);
         }
 
-        .card-content p {
+        .skill-card p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        /* Projects Section */
+        .project-section {
+            padding: 8rem 0;
+        }
+
+        .project-card {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+            margin-bottom: 8rem;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+
+        .project-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .project-card.reverse {
+            grid-template-columns: 1fr 1fr;
+            direction: rtl;
+        }
+
+        .project-card.reverse .project-info {
+            direction: ltr;
+        }
+
+        .project-visual {
+            position: relative;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-card);
+            background: #000;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.5);
+        }
+
+        .project-visual img, .project-visual video {
+            width: 100%;
+            display: block;
+        }
+
+        .project-badge {
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--accent-cyan);
+            margin-bottom: 1rem;
+            display: inline-block;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .project-info h2 {
+            font-family: var(--font-heading);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .project-info p {
+            color: var(--text-secondary);
+            margin-bottom: 2rem;
+            font-size: 1.1rem;
+        }
+
+        .tech-list {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+        }
+
+        .tech-item {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-secondary);
+            padding: 0.3rem 0.8rem;
+            background: rgba(255,255,255,0.05);
+            border-radius: 4px;
+        }
+
+        /* Contact Section */
+        .contact-section {
+            background: linear-gradient(to bottom, transparent, rgba(59, 130, 246, 0.05));
+            padding: 8rem 0;
+            text-align: center;
+        }
+
+        .email-link {
+            font-size: clamp(1.2rem, 5vw, 2.5rem);
+            font-family: var(--font-heading);
+            color: var(--text-primary);
+            text-decoration: none;
+            border-bottom: 2px solid var(--accent-blue);
+            padding-bottom: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .email-link:hover {
+            opacity: 0.8;
+            color: var(--accent-blue);
+        }
+
+        footer {
+            padding: 4rem 0;
+            text-align: center;
+            border-top: 1px solid var(--border-card);
+            color: var(--text-secondary);
             font-size: 0.9rem;
-            color: var(--secondary-color);
-            font-weight: 300;
         }
 
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            .gallery {
+        /* Mobile Adjustments */
+        @media (max-width: 900px) {
+            .project-card, .project-card.reverse {
                 grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+            .project-card.reverse {
+                direction: ltr;
+            }
+            .project-info h2 {
+                font-size: 2rem;
             }
         }
-
     </style>
 </head>
-
 <body>
+    <div class="bg-gradient"></div>
+
     <div class="container">
-        <h1>Project Showcase</h1>
-        <div class="gallery" id="project-gallery">
-            <!-- Projects will be loaded here dynamically -->
-        </div>
+        <!-- Hero -->
+        <header id="home">
+            <div class="hero-badge">Game Frontend & AI Agent Engineer</div>
+            <h1>趙敬瑋 (Chao Ching-Wei)</h1>
+            <p class="hero-role">
+                擁有 <span>5 年遊戲前端</span>開發經驗，現專注於 <span>AI Agent</span>、CDP 自動化控制與遊戲引擎底層架構。
+            </p>
+            <div class="cta-group">
+                <a href="#projects" class="btn btn-primary">查看作品</a>
+                <a href="mailto:cs.cultivator@gmail.com" class="btn btn-outline">聯絡我</a>
+            </div>
+        </header>
+
+        <!-- Expertise -->
+        <section id="expertise">
+            <h2 class="section-title">核心專業背景</h2>
+            <div class="expertise-grid">
+                <div class="skill-card">
+                    <span class="skill-icon">🎮</span>
+                    <h3>Game Engine</h3>
+                    <p>精通 LayaAir 3.x, EgretEngine, FairyGUI。具備高效 UI 自定義與性能優化能力。</p>
+                </div>
+                <div class="skill-card">
+                    <span class="skill-icon">🤖</span>
+                    <h3>AI Agent / CDP</h3>
+                    <p>擅長使用 Chrome DevTools Protocol 進行 IDE 行為注入，開發專業開發級別的 AI 自動化工具。</p>
+                </div>
+                <div class="skill-card">
+                    <span class="skill-icon">⚡</span>
+                    <h3>Frontend Stack</h3>
+                    <p>React 19, TypeScript, Vite, Tailwind v4。致力於打造極致視覺與互動體驗。</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projects -->
+        <section id="projects" class="project-section">
+            <h2 class="section-title">代表作品</h2>
+
+            <!-- Project 1: Laya IDE Master -->
+            <div class="project-card">
+                <div class="project-visual">
+                    <video src="./test_1_layaIdeMaster/product.mp4" autoplay loop muted playsinline></video>
+                </div>
+                <div class="project-info">
+                    <span class="project-badge">Agent Engineering / CLI</span>
+                    <h2>LayaAir IDE Master</h2>
+                    <p>
+                        基於 CDP 技術的 LayaAir 3.x 強力控制橋樑。解決了 IDE 閉源限制，實現跨進程操作，讓 AI 代理能以「上帝視角」直接調整場景節點、UUID 與資源管理器。
+                    </p>
+                    <div class="tech-list">
+                        <span class="tech-item">CDP</span>
+                        <span class="tech-item">WebSocket</span>
+                        <span class="tech-item">LayaAir 3.x</span>
+                        <span class="tech-item">Node.js</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2: Music App -->
+            <div class="project-card reverse">
+                <div class="project-visual" style="background: linear-gradient(135deg, #1e293b, #0f172a); padding: 2rem; display: flex; align-items: center; justify-content: center; gap: 1rem;">
+                    <img src="./project_1_webMusicApp/product_desktop.png" style="width: 70%; transform: rotate(-5deg); box-shadow: -10px 10px 30px rgba(0,0,0,0.5); border-radius: 8px;">
+                    <img src="./project_1_webMusicApp/product_mobile.png" style="width: 25%; position: absolute; right: 5%; bottom: -5%; box-shadow: 10px 10px 30px rgba(0,0,0,0.5); border-radius: 12px; border: 2px solid var(--border-card);">
+                </div>
+                <div class="project-info">
+                    <span class="project-badge">Music Platform / Full Stack</span>
+                    <h2>ms.million (Music App)</h2>
+                    <p>
+                        以黑膠播放器為核心視覺的沉浸式音樂站。集成 OpenAI Whisper 進行全自動歌詞同步，並結合毛玻璃特效與動態氛圍，提供頂級的視覺聽覺饗宴。
+                    </p>
+                    <div class="tech-list">
+                        <span class="tech-item">React 19</span>
+                        <span class="tech-item">Vite</span>
+                        <span class="tech-item">Express</span>
+                        <span class="tech-item">Whisper AI</span>
+                        <span class="tech-item">SQLite</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact -->
+        <section class="contact-section">
+            <h2 class="section-title">與我聯繫</h2>
+            <p style="color: var(--text-secondary); margin-bottom: 2rem;">如果您對我的開發實力或 Agent 解決方案感興趣，歡迎寄信與我交流。</p>
+            <a href="mailto:cs.cultivator@gmail.com" class="email-link">cs.cultivator@gmail.com</a>
+        </section>
+
+        <footer>
+            <p>© 2026 趙敬瑋 | Designed with Excellence</p>
+        </footer>
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const gallery = document.getElementById('project-gallery');
+        // Scroll Reveal Animation
+        const observerOptions = {
+            threshold: 0.1
+        };
 
-            fetch('projects.json')
-                .then(response => {
-                    if (!response.ok) {
-                        throw new Error(`HTTP error! status: ${response.status}`);
-                    }
-                    return response.json();
-                })
-                .then(projects => {
-                    projects.forEach(project => {
-                        const card = document.createElement('a');
-                        card.href = project.link;
-                        card.className = 'card';
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
 
-                        const imageContent = project.imageUrl
-                            ? `<img src="${project.imageUrl}" alt="${project.title} Preview">`
-                            : '<span class="placeholder">No Preview</span>';
-
-                        card.innerHTML = `
-                            <div class="card-image">
-                                ${imageContent}
-                            </div>
-                            <div class="card-content">
-                                <h3>${project.title}</h3>
-                                <p>${project.description}</p>
-                            </div>
-                        `;
-                        gallery.appendChild(card);
-                    });
-                })
-                .catch(error => {
-                    console.error("Error fetching or parsing projects:", error);
-                    gallery.innerHTML = '<p style="color: var(--secondary-color);">Could not load projects. Please check the console for more information.</p>';
-                });
+        document.querySelectorAll('.project-card').forEach(card => {
+            observer.observe(card);
         });
     </script>
 </body>
-
 </html>

@@ -1,0 +1,58 @@
+{
+  "name": "layaIdeMaster-cli-pipe",
+  "description": "LayaAir 3 IDE Automation CLI Command Bridge (Atomic Edition)",
+  "commands": {
+    "menu": {
+      "desc": "🌟 進入交互式選單介面 (推薦手動使用)。",
+      "example": "node scripts/laya-cli.js menu"
+    },
+    "start": {
+      "desc": "Launch the IDE with the correct debugging port (9222).",
+      "example": "node scripts/laya-cli.js start"
+    },
+    "stop": {
+      "desc": "Force close the LayaAir IDE process.",
+      "example": "node scripts/laya-cli.js stop"
+    },
+    "list-projects": {
+      "desc": "List all projects in the Launcher's recent list.",
+      "example": "node scripts/laya-cli.js list-projects"
+    },
+    "autoOpen": {
+      "desc": "Open a project by index (e.g. 0) or by absolute path.",
+      "example": "node scripts/laya-cli.js autoOpen 0"
+    },
+    "open-scene": {
+      "desc": "Open a specific scene or prefab file by its asset path.",
+      "example": "node scripts/laya-cli.js open-scene \"assets/Hello.ls\""
+    },
+    "play": {
+      "desc": "Start game preview for the current or specified scene ID.",
+      "example": "node scripts/laya-cli.js play"
+    },
+    "stop-play": {
+      "desc": "Stop the current game preview.",
+      "example": "node scripts/laya-cli.js stop-play"
+    },
+    "inspect": {
+      "desc": "Inspect the Laya runtime engine state (Stage size, node count).",
+      "example": "node scripts/laya-cli.js inspect"
+    },
+    "expand": {
+      "desc": "Resolve a file path to an asset ID and expand the folder in the IDE.",
+      "example": "node scripts/laya-cli.js expand assets/resources"
+    },
+    "select": {
+      "desc": "Select and scroll to a specific file in the IDE Project Panel.",
+      "example": "node scripts/laya-cli.js select assets/Scene1.ls"
+    },
+    "collapse": {
+      "desc": "Collapse all folders in the Project Panel.",
+      "example": "node scripts/laya-cli.js collapse"
+    },
+    "eval": {
+      "desc": "Execute arbitrary JavaScript in the IDE renderer context.",
+      "example": "node scripts/laya-cli.js eval \"Editor.projectName\""
+    }
+  }
+}
