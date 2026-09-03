@@ -1,0 +1,758 @@
+/* V15 fixes: auto-advance FG + clearer 5-row big wild + safer win overlay */
+.board-frame {
+  isolation: isolate;
+}
+
+.slot-board {
+  min-height: clamp(320px, 54vw, 620px);
+}
+
+.reel {
+  grid-template-rows: repeat(5, minmax(0, 1fr));
+  align-content: stretch;
+}
+
+.big-wild-card {
+  z-index: 8;
+}
+
+.big-wild-card::after {
+  background:
+    linear-gradient(180deg, rgba(255,255,255,.05), rgba(255,255,255,0) 12%, rgba(255,255,255,0) 88%, rgba(255,255,255,.04)),
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0 calc(20% - 1px),
+      rgba(255,255,255,.11) calc(20% - 1px) calc(20% + 1px)
+    );
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,.05),
+    inset 0 0 26px rgba(0,0,0,.28);
+}
+
+.big-wild-card .wild-mark {
+  top: 4px;
+  margin-bottom: 0;
+  padding: 2px 6px;
+  border-radius: 999px;
+  background: rgba(0,0,0,.66);
+  box-shadow: 0 2px 10px rgba(0,0,0,.35);
+}
+
+.big-wild-card .wild-multiplier-big {
+  bottom: 4px;
+  padding: 3px 10px 4px;
+  border-radius: 999px;
+  background: linear-gradient(180deg, rgba(0,0,0,.68), rgba(0,0,0,.36));
+  box-shadow: 0 4px 14px rgba(0,0,0,.45);
+}
+
+.win-presentation {
+  z-index: 120 !important;
+  bottom: 12%;
+}
+
+.win-equation {
+  width: min(82%, 420px);
+  padding: 10px 18px 14px;
+  border-radius: 999px;
+  background: radial-gradient(circle at 50% 35%, rgba(255,223,149,.16), rgba(0,0,0,.72) 54%, rgba(0,0,0,.42) 72%, transparent 100%);
+  box-shadow: 0 0 24px rgba(0,0,0,.45);
+}
+
+/* ===== v16 side-bet layout refinement ===== */
+.catalog-panel {
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.catalog-intro-fixed {
+  position: relative;
+  z-index: 2;
+  margin: 0 16px 0;
+  flex: 0 0 auto;
+}
+
+.catalog-scroll {
+  padding: 10px 16px 8px;
+}
+
+.catalog-fixed-zone {
+  padding: 10px 16px 16px;
+}
+
+.catalog-summary,
+.catalog-summary-compact,
+.selected-card-slots,
+.catalog-selected-bar {
+  display: none !important;
+}
+
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+  padding-bottom: 4px;
+}
+
+.catalog-card {
+  position: relative;
+  display: grid;
+  grid-template-columns: 64px minmax(0, 1fr);
+  align-items: center;
+  min-height: 88px;
+  padding: 8px 10px 8px 8px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.08);
+  background: var(--panel-bg, linear-gradient(180deg, rgba(25,25,30,.95), rgba(10,10,14,.98)));
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 0 8px 18px rgba(0,0,0,.18);
+  overflow: hidden;
+}
+
+.catalog-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--accent-soft, transparent), transparent 52%);
+  opacity: .9;
+  pointer-events: none;
+}
+
+.catalog-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05);
+  pointer-events: none;
+}
+
+.catalog-card.is-selected {
+  border-color: rgba(255, 221, 127, .7);
+  box-shadow: 0 0 0 1px rgba(255, 221, 127, .16), 0 0 18px rgba(255, 197, 81, .18);
+}
+
+.catalog-card.is-empty {
+  opacity: .5;
+}
+
+.card-select-area {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  border: 0;
+  background: transparent;
+  cursor: pointer;
+}
+
+.card-select-area[disabled] {
+  cursor: not-allowed;
+}
+
+.card-medallion,
+.card-copy,
+.card-lock-button {
+  position: relative;
+  z-index: 2;
+}
+
+.card-medallion {
+  width: 56px;
+  height: 56px;
+  border-radius: 10px;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  font-weight: 900;
+  color: var(--accent-strong, #f4e7ca);
+  background:
+    radial-gradient(circle at 50% 22%, rgba(255,255,255,.14), transparent 36%),
+    linear-gradient(180deg, rgba(15,19,27,.96), rgba(6,8,12,.98));
+  border: 1px solid color-mix(in srgb, var(--accent, #fff) 70%, rgba(255,255,255,.18));
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.04), 0 0 18px rgba(0,0,0,.18);
+}
+
+.card-medallion::after {
+  content: attr(data-level);
+  position: absolute;
+  right: -4px;
+  bottom: -6px;
+  padding: 1px 5px;
+  border-radius: 999px;
+  font-size: 9px;
+  line-height: 1.4;
+  font-weight: 800;
+  color: #fff;
+  background: rgba(8,10,14,.92);
+  border: 1px solid rgba(255,255,255,.08);
+}
+
+.card-copy {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding-right: 18px;
+}
+
+.card-title-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
+}
+
+.card-quality-badge {
+  flex: 0 0 auto;
+  padding: 2px 8px;
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 700;
+  color: #f7e5a6;
+  background: linear-gradient(180deg, rgba(148,120,46,.95), rgba(99,74,20,.98));
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.18);
+}
+
+.card-copy strong {
+  min-width: 0;
+  font-size: 15px;
+  line-height: 1.2;
+  color: #f4efe4;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.card-multiplier {
+  font-size: 12px;
+  line-height: 1.3;
+  color: #d9d0c2;
+}
+
+.card-count {
+  font-size: 12px;
+  line-height: 1.2;
+  color: #fff;
+  font-weight: 700;
+}
+
+.card-lock-button {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  z-index: 3;
+  width: 24px;
+  height: 24px;
+  border-radius: 999px;
+  border: 1px solid rgba(255,255,255,.12);
+  background: rgba(20,22,28,.82);
+  color: rgba(255,255,255,.82);
+  font-size: 12px;
+  line-height: 1;
+  display: grid;
+  place-items: center;
+  box-shadow: 0 4px 10px rgba(0,0,0,.22);
+}
+
+.card-lock-button:not(.is-locked) {
+  opacity: .72;
+}
+
+.card-lock-button.is-locked {
+  border-color: rgba(255,220,128,.5);
+  color: #ffe08a;
+  background: rgba(56,46,19,.9);
+}
+
+.catalog-color-tray-reference {
+  --swatch-columns: 4;
+  display: grid;
+  grid-template-columns: repeat(var(--swatch-columns), minmax(0, 1fr));
+  gap: 12px;
+  padding: 2px 0 12px;
+}
+
+.catalog-fixed-slot {
+  position: relative;
+  min-height: 72px;
+  border-radius: 10px;
+  border: 1px solid rgba(255,255,255,.10);
+  background:
+    linear-gradient(180deg, rgba(16,16,20,.96), rgba(8,8,12,.98));
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+  overflow: hidden;
+}
+
+.catalog-fixed-slot::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: var(--accent-soft, transparent);
+  opacity: .45;
+  pointer-events: none;
+}
+
+.catalog-fixed-slot-label,
+.catalog-fixed-slot-icon,
+.catalog-fixed-slot-level,
+.catalog-fixed-slot-placeholder {
+  position: relative;
+  z-index: 1;
+}
+
+.catalog-fixed-slot-label {
+  position: absolute;
+  top: 6px;
+  left: 8px;
+  font-size: 12px;
+  font-weight: 700;
+  color: #f1e3c4;
+}
+
+.catalog-fixed-slot-placeholder {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.catalog-fixed-slot-icon {
+  display: grid;
+  place-items: center;
+  min-height: 72px;
+  font-size: 34px;
+  font-weight: 900;
+  color: #fff3d4;
+  text-shadow: 0 0 12px rgba(255,220,128,.18);
+}
+
+.catalog-fixed-slot-level {
+  position: absolute;
+  right: 7px;
+  bottom: 6px;
+  padding: 1px 6px;
+  border-radius: 999px;
+  background: rgba(10,11,16,.84);
+  border: 1px solid rgba(255,255,255,.10);
+  color: #fff;
+  font-size: 10px;
+  font-weight: 800;
+}
+
+.catalog-fixed-slot.is-selected {
+  border-color: rgba(255, 221, 127, .82);
+  box-shadow: 0 0 18px rgba(255, 212, 102, .24), inset 0 0 0 1px rgba(255,255,255,.06);
+}
+
+.catalog-footer-reference {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  padding: 0;
+}
+
+.catalog-clear-mini {
+  justify-self: end;
+}
+
+.catalog-adjust-row-reference {
+  display: grid;
+  grid-template-columns: 48px minmax(0, 1fr) 48px;
+  gap: 12px;
+  align-items: center;
+}
+
+.catalog-adjust-label {
+  text-align: center;
+}
+
+.catalog-footer-meta-row {
+  margin-top: 0;
+}
+
+.catalog-launch-button-reference {
+  justify-self: center;
+}
+
+@media (max-width: 640px) {
+  .catalog-intro-fixed {
+    margin-left: 12px;
+    margin-right: 12px;
+  }
+
+  .catalog-scroll,
+  .catalog-fixed-zone {
+    padding-left: 12px;
+    padding-right: 12px;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .catalog-color-tray-reference {
+    gap: 8px;
+  }
+
+  .catalog-fixed-slot {
+    min-height: 64px;
+  }
+
+  .catalog-fixed-slot-icon {
+    min-height: 64px;
+    font-size: 28px;
+  }
+}
+
+/* ===== v17 definitive reel fixes ===== */
+/*
+ * Static reel cells are positioned in five explicit 20% bands instead of relying
+ * on implicit grid sizing. This guarantees that a reel can never collapse to
+ * four visible rows when a big WILD overlay is inserted.
+ */
+.reel {
+  display: block !important;
+  position: relative;
+  overflow: hidden;
+}
+
+.reel > .slot-cell {
+  position: absolute !important;
+  left: 2px;
+  right: 2px;
+  top: calc(var(--row-top, 0%) + 2px);
+  width: auto;
+  height: calc(20% - 4px);
+  min-height: 0 !important;
+  margin: 0;
+  box-sizing: border-box;
+}
+
+.reel > .big-wild-card {
+  position: absolute !important;
+  inset: 2px !important;
+  width: auto;
+  height: auto;
+  z-index: 20;
+}
+
+/* A sticky full-reel WILD remains fixed while the other reels spin. */
+.reel.is-sticky-hold > .big-wild-card {
+  filter: brightness(.96);
+}
+
+/* Rolling tracks stay independent from the five static row bands. */
+.reel > .reel-spin-track,
+.reel > .reel-stop-track {
+  position: absolute !important;
+  inset: 2px 2px auto 2px;
+  z-index: 30;
+}
+
+
+/* ===== v18 side-bet panel sizing and layout cleanup ===== */
+.catalog-panel {
+  width: min(92vw, 760px) !important;
+  max-height: min(92dvh, 980px) !important;
+}
+
+.catalog-panel .modal-header {
+  padding: 22px 28px 18px !important;
+}
+
+.catalog-panel .modal-header h2 {
+  font-size: clamp(28px, 3.8vw, 44px) !important;
+}
+
+.catalog-intro-fixed {
+  margin: 0 28px !important;
+}
+
+.catalog-intro {
+  padding: 14px 18px !important;
+}
+
+.catalog-intro strong {
+  font-size: 15px !important;
+}
+
+.catalog-intro p {
+  font-size: 15px !important;
+  line-height: 1.65 !important;
+}
+
+.catalog-scroll {
+  padding: 14px 28px 12px !important;
+}
+
+.catalog-fixed-zone {
+  padding: 12px 28px 24px !important;
+}
+
+.card-grid {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 14px !important;
+  padding-bottom: 6px !important;
+}
+
+.catalog-card {
+  grid-template-columns: 82px minmax(0, 1fr) !important;
+  min-height: 118px !important;
+  padding: 12px 14px 12px 12px !important;
+  border-radius: 14px !important;
+}
+
+.card-medallion {
+  width: 74px !important;
+  height: 74px !important;
+  font-size: 38px !important;
+  border-radius: 14px !important;
+}
+
+.card-copy {
+  gap: 8px !important;
+  padding-right: 34px !important;
+}
+
+.card-title-row {
+  gap: 8px !important;
+}
+
+.card-quality-badge {
+  padding: 3px 10px !important;
+  font-size: 11px !important;
+}
+
+.card-copy strong {
+  font-size: 20px !important;
+}
+
+.card-multiplier,
+.card-count {
+  font-size: 15px !important;
+  line-height: 1.35 !important;
+}
+
+.card-lock-button {
+  top: 10px !important;
+  right: 10px !important;
+  width: 28px !important;
+  height: 28px !important;
+  font-size: 14px !important;
+}
+
+.catalog-selection-shell {
+  display: grid;
+  gap: 10px;
+  padding: 12px 14px 14px;
+  border-radius: 16px;
+  background: linear-gradient(180deg, rgba(15, 14, 21, 0.96), rgba(7, 7, 12, 0.99));
+  border: 1px solid rgba(255,255,255,.08);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.03);
+}
+
+.catalog-selection-toolbar {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.catalog-clear-inline {
+  min-height: 38px;
+  padding: 0 18px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  color: #f0e6d2;
+  background: linear-gradient(180deg, rgba(68,58,72,.96), rgba(28,24,33,.98));
+  border: 1px solid rgba(255,255,255,.14);
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.08), 0 8px 16px rgba(0,0,0,.16);
+}
+
+.catalog-color-tray-reference {
+  gap: 12px !important;
+  padding: 0 !important;
+}
+
+.catalog-fixed-slot {
+  min-height: 96px !important;
+  border-radius: 14px !important;
+}
+
+.catalog-fixed-slot-label {
+  top: 10px !important;
+  left: 12px !important;
+  font-size: 16px !important;
+}
+
+.catalog-fixed-slot-icon {
+  min-height: 96px !important;
+  font-size: 48px !important;
+}
+
+.catalog-fixed-slot-level {
+  right: 10px !important;
+  bottom: 10px !important;
+  padding: 2px 8px !important;
+  font-size: 12px !important;
+}
+
+.catalog-footer-reference {
+  padding-top: 14px !important;
+}
+
+.catalog-adjust-label {
+  margin-bottom: 10px !important;
+  font-size: 20px !important;
+  font-weight: 700 !important;
+}
+
+.catalog-adjust-row-reference {
+  grid-template-columns: 64px minmax(0, 1fr) 64px !important;
+  gap: 18px !important;
+}
+
+.catalog-adjust-button {
+  min-height: 54px !important;
+  min-width: 54px !important;
+  border-radius: 12px !important;
+  font-size: 34px !important;
+}
+
+.catalog-bet-value-box {
+  min-height: 58px !important;
+  border-radius: 12px !important;
+}
+
+.catalog-bet-value-box span {
+  font-size: 13px !important;
+}
+
+.catalog-bet-value-box strong {
+  font-size: 28px !important;
+}
+
+.catalog-footer-meta-row,
+.catalog-auto-capacity-pill {
+  display: none !important;
+}
+
+.catalog-launch-button-reference {
+  width: min(220px, 100%) !important;
+  min-height: 60px !important;
+  margin-top: 16px !important;
+  border-radius: 10px !important;
+  font-size: 28px !important;
+}
+
+@media (max-width: 760px) {
+  .catalog-panel {
+    width: min(96vw, 680px) !important;
+  }
+
+  .catalog-panel .modal-header {
+    padding: 18px 18px 14px !important;
+  }
+
+  .catalog-intro-fixed {
+    margin: 0 18px !important;
+  }
+
+  .catalog-scroll,
+  .catalog-fixed-zone {
+    padding-left: 18px !important;
+    padding-right: 18px !important;
+  }
+
+  .card-grid {
+    gap: 10px !important;
+  }
+
+  .catalog-card {
+    grid-template-columns: 70px minmax(0, 1fr) !important;
+    min-height: 102px !important;
+    padding: 10px !important;
+  }
+
+  .card-medallion {
+    width: 62px !important;
+    height: 62px !important;
+    font-size: 34px !important;
+  }
+
+  .card-copy strong {
+    font-size: 17px !important;
+  }
+
+  .card-multiplier,
+  .card-count {
+    font-size: 13px !important;
+  }
+
+  .catalog-fixed-slot {
+    min-height: 82px !important;
+  }
+
+  .catalog-fixed-slot-icon {
+    min-height: 82px !important;
+    font-size: 40px !important;
+  }
+
+  .catalog-adjust-label {
+    font-size: 18px !important;
+  }
+
+  .catalog-bet-value-box strong {
+    font-size: 24px !important;
+  }
+}
+
+@media (max-width: 560px) {
+  .catalog-panel {
+    width: min(96vw, 560px) !important;
+  }
+
+  .catalog-panel .modal-header h2 {
+    font-size: clamp(24px, 7.2vw, 34px) !important;
+  }
+
+  .catalog-intro strong,
+  .catalog-intro p {
+    font-size: 13px !important;
+  }
+
+  .card-grid {
+    grid-template-columns: 1fr !important;
+  }
+
+  .catalog-color-tray-reference {
+    gap: 8px !important;
+  }
+
+  .catalog-fixed-slot {
+    min-height: 70px !important;
+  }
+
+  .catalog-fixed-slot-label {
+    font-size: 13px !important;
+  }
+
+  .catalog-fixed-slot-icon {
+    min-height: 70px !important;
+    font-size: 32px !important;
+  }
+
+  .catalog-adjust-row-reference {
+    grid-template-columns: 54px minmax(0, 1fr) 54px !important;
+    gap: 12px !important;
+  }
+
+  .catalog-adjust-button {
+    min-height: 46px !important;
+    min-width: 46px !important;
+    font-size: 28px !important;
+  }
+
+  .catalog-launch-button-reference {
+    width: 100% !important;
+  }
+}

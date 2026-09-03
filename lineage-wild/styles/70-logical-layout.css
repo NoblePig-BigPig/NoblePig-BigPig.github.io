@@ -1,0 +1,544 @@
+/* ===== V33: fixed logical canvases + automatic portrait/landscape scaling ===== */
+:root {
+  --game-design-width: 1024;
+  --game-design-height: 1820;
+  --game-scale: 1;
+}
+
+html,
+body {
+  width: 100%;
+  height: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+body {
+  margin: 0;
+}
+
+.app {
+  position: fixed !important;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  min-height: 0 !important;
+  overflow: hidden;
+}
+
+.game-shell {
+  position: absolute !important;
+  top: 50%;
+  left: 50%;
+  width: 1024px !important;
+  max-width: none !important;
+  height: 1820px !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  padding: 18px 24px !important;
+  display: grid;
+  grid-template-rows: 62px 300px 790px 130px 110px 185px;
+  row-gap: 5px;
+  align-content: center;
+  overflow: hidden;
+  transform: translate(-50%, -50%) scale(var(--game-scale));
+  transform-origin: center center;
+  contain: layout paint style;
+}
+
+.game-shell > * {
+  min-width: 0;
+  min-height: 0;
+}
+
+.topbar,
+.battle-stage,
+.board-frame,
+.feature-actions,
+.wallet-row,
+.result-panel,
+.debug-panel,
+.demo-note {
+  width: 940px !important;
+  max-width: 940px !important;
+  margin-left: auto !important;
+  margin-right: auto !important;
+}
+
+.topbar {
+  min-height: 0 !important;
+  height: 62px;
+  grid-template-columns: 58px 1fr 58px !important;
+}
+
+.icon-button {
+  width: 52px !important;
+  height: 52px !important;
+  font-size: 25px !important;
+}
+
+.mode-label {
+  font-size: 24px !important;
+}
+
+.mode-detail {
+  font-size: 15px !important;
+}
+
+.battle-stage {
+  height: 300px !important;
+  aspect-ratio: auto !important;
+  margin-top: 0 !important;
+  border-radius: 20px 20px 0 0 !important;
+}
+
+.board-frame {
+  height: 790px !important;
+  padding: 10px !important;
+  margin-top: -2px !important;
+  display: grid;
+  grid-template-rows: 30px minmax(0, 1fr);
+  border-radius: 0 0 20px 20px !important;
+}
+
+.reel-headings {
+  height: 30px;
+  margin: 0 !important;
+  align-items: center;
+  font-size: 18px !important;
+  gap: 4px !important;
+}
+
+.slot-board {
+  width: 100%;
+  height: 100%;
+  aspect-ratio: auto !important;
+  gap: 4px !important;
+}
+
+.reel {
+  gap: 3px !important;
+  padding: 3px !important;
+}
+
+.slot-cell {
+  border-radius: 7px !important;
+}
+
+.board-chest-button {
+  top: -66px !important;
+  right: 8px !important;
+  width: 82px !important;
+  height: 74px !important;
+}
+
+.board-chest-button .chest-count {
+  min-width: 27px;
+  height: 27px;
+  font-size: 13px;
+}
+
+.feature-actions-two {
+  width: 820px !important;
+  height: 92px;
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 18px !important;
+  align-items: center !important;
+}
+
+.feature-actions-two .buy-bonus-button,
+#buyNormalBtn,
+#buySuperBtn {
+  grid-template-rows: 82px !important;
+}
+
+.buy-bonus-plate {
+  width: 100% !important;
+  height: 82px !important;
+  aspect-ratio: auto !important;
+}
+
+.buy-bonus-title,
+#buySuperBtn .buy-bonus-title {
+  font-size: 24px !important;
+}
+
+.feature-actions-two .buy-bonus-button small,
+#buyNormalBtn small,
+#buySuperBtn small {
+  display: none !important;
+}
+
+.wallet-row {
+  height: 110px;
+  margin-top: 0 !important;
+  grid-template-columns: 1fr 1.16fr 1fr !important;
+  gap: 14px !important;
+}
+
+.metric-card.metric-card-with-icon {
+  height: 110px;
+  min-height: 110px !important;
+  grid-template-columns: 96px minmax(0, 1fr) !important;
+  gap: 10px !important;
+  padding: 8px 16px !important;
+  border-radius: 12px !important;
+}
+
+.metric-card-with-icon .metric-icon {
+  width: 88px !important;
+  height: 88px !important;
+  justify-self: center;
+  object-fit: contain;
+  filter:
+    saturate(.76)
+    brightness(1.08)
+    drop-shadow(0 4px 8px rgba(0, 0, 0, .78)) !important;
+}
+
+.metric-card-with-icon .metric-copy span {
+  font-size: 16px !important;
+  letter-spacing: .1em !important;
+}
+
+.metric-card-with-icon .metric-copy strong {
+  margin-top: 4px !important;
+  font-size: 31px !important;
+  line-height: 1.05 !important;
+}
+
+.metric-card-with-icon .metric-copy small {
+  margin-top: 4px !important;
+  font-size: 13px !important;
+}
+
+.controls {
+  width: 780px !important;
+  height: 185px;
+  margin: 0 auto !important;
+  grid-template-columns: 130px 130px 190px 130px 130px !important;
+  gap: 25px !important;
+}
+
+.round-button.asset-control {
+  width: 130px !important;
+  height: 130px !important;
+  aspect-ratio: 1 !important;
+}
+
+.spin-button.asset-control,
+#spinBtn.spin-button-localized {
+  width: 190px !important;
+  height: 190px !important;
+  aspect-ratio: 1 !important;
+}
+
+#spinBtn.spin-button-localized .spin-core {
+  font-size: 31px !important;
+  letter-spacing: .03em !important;
+}
+
+.result-panel {
+  height: 90px;
+  margin-top: 0 !important;
+  padding: 10px 16px !important;
+  overflow: hidden;
+}
+
+.result-heading {
+  font-size: 14px !important;
+}
+
+.result-log {
+  max-height: 49px;
+  overflow: hidden;
+  font-size: 13px !important;
+}
+
+.debug-panel {
+  height: 38px;
+  margin-top: 0 !important;
+  overflow: hidden;
+}
+
+.debug-panel > summary {
+  height: 38px;
+  line-height: 38px;
+  padding-block: 0 !important;
+}
+
+.debug-panel[open] {
+  position: absolute;
+  z-index: 800;
+  left: 42px;
+  right: 42px;
+  bottom: 44px;
+  width: auto !important;
+  max-width: none !important;
+  height: auto;
+  max-height: 420px;
+  overflow: auto;
+  background: rgba(7, 6, 9, .98);
+}
+
+.demo-note {
+  height: 22px;
+  line-height: 22px;
+  overflow: hidden;
+  font-size: 11px !important;
+}
+
+/* Landscape logical canvas: 1024 × 576, arranged like the reference game. */
+.app.is-landscape .game-shell {
+  width: 1024px !important;
+  height: 576px !important;
+  padding: 0 !important;
+  display: block;
+  overflow: hidden;
+}
+
+.app.is-landscape .game-shell::before,
+.app.is-landscape .game-shell::after {
+  display: none;
+}
+
+.app.is-landscape .battle-stage {
+  display: none !important;
+}
+
+.app.is-landscape .topbar {
+  position: absolute;
+  z-index: 60;
+  top: 8px;
+  left: 12px;
+  width: 204px !important;
+  max-width: none !important;
+  height: 54px;
+  margin: 0 !important;
+  grid-template-columns: 48px minmax(0, 1fr) !important;
+  gap: 8px;
+}
+
+.app.is-landscape .topbar-spacer {
+  display: none;
+}
+
+.app.is-landscape .icon-button {
+  width: 46px !important;
+  height: 46px !important;
+  font-size: 21px !important;
+}
+
+.app.is-landscape .mode-stack {
+  align-items: flex-start;
+  text-align: left;
+}
+
+.app.is-landscape .mode-label {
+  font-size: 17px !important;
+}
+
+.app.is-landscape .mode-detail {
+  max-width: 145px;
+  overflow: hidden;
+  font-size: 10px !important;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.app.is-landscape .board-frame {
+  position: absolute;
+  z-index: 20;
+  top: 8px;
+  left: 238px;
+  width: 548px !important;
+  max-width: none !important;
+  height: 475px !important;
+  margin: 0 !important;
+  padding: 7px !important;
+  grid-template-rows: 23px minmax(0, 1fr);
+  border-radius: 12px !important;
+}
+
+.app.is-landscape .reel-headings {
+  height: 23px;
+  font-size: 11px !important;
+}
+
+.app.is-landscape .slot-board {
+  gap: 2px !important;
+}
+
+.app.is-landscape .reel {
+  gap: 2px !important;
+  padding: 2px !important;
+}
+
+.app.is-landscape .board-chest-button {
+  top: 4px !important;
+  right: 4px !important;
+  width: 54px !important;
+  height: 50px !important;
+}
+
+.app.is-landscape .board-chest-button .chest-count {
+  min-width: 21px;
+  height: 21px;
+  font-size: 10px;
+}
+
+.app.is-landscape .feature-actions-two {
+  position: absolute;
+  z-index: 30;
+  top: 188px;
+  left: 17px;
+  width: 182px !important;
+  max-width: none !important;
+  height: auto;
+  margin: 0 !important;
+  display: grid;
+  grid-template-columns: 1fr !important;
+  gap: 12px !important;
+}
+
+.app.is-landscape .feature-actions-two .buy-bonus-button,
+.app.is-landscape #buyNormalBtn,
+.app.is-landscape #buySuperBtn {
+  grid-template-rows: 44px !important;
+}
+
+.app.is-landscape .buy-bonus-plate {
+  height: 44px !important;
+}
+
+.app.is-landscape .buy-bonus-title,
+.app.is-landscape #buySuperBtn .buy-bonus-title {
+  font-size: 12px !important;
+}
+
+.app.is-landscape .feature-actions-two .buy-bonus-button small,
+.app.is-landscape #buyNormalBtn small,
+.app.is-landscape #buySuperBtn small {
+  display: none !important;
+}
+
+.app.is-landscape .wallet-row {
+  position: absolute;
+  z-index: 45;
+  left: 228px;
+  bottom: 7px;
+  width: 568px !important;
+  max-width: none !important;
+  height: 57px;
+  margin: 0 !important;
+  gap: 6px !important;
+}
+
+.app.is-landscape .metric-card.metric-card-with-icon {
+  height: 57px;
+  min-height: 57px !important;
+  grid-template-columns: 48px minmax(0, 1fr) !important;
+  gap: 3px !important;
+  padding: 3px 7px !important;
+  border-radius: 6px !important;
+}
+
+.app.is-landscape .metric-card-with-icon .metric-icon {
+  width: 44px !important;
+  height: 44px !important;
+}
+
+.app.is-landscape .metric-card-with-icon .metric-copy span {
+  font-size: 8px !important;
+}
+
+.app.is-landscape .metric-card-with-icon .metric-copy strong {
+  margin-top: 1px !important;
+  font-size: 16px !important;
+}
+
+.app.is-landscape .metric-card-with-icon .metric-copy small {
+  margin-top: 0 !important;
+  font-size: 7px !important;
+}
+
+.app.is-landscape .controls {
+  position: absolute;
+  z-index: 50;
+  top: 72px;
+  right: 21px;
+  width: 174px !important;
+  height: 475px;
+  margin: 0 !important;
+  display: block;
+}
+
+.app.is-landscape .round-button.asset-control,
+.app.is-landscape .spin-button.asset-control {
+  position: absolute;
+  margin: 0 !important;
+}
+
+.app.is-landscape #spinBtn {
+  top: 125px;
+  left: 10px;
+  width: 154px !important;
+  height: 154px !important;
+}
+
+.app.is-landscape #spinBtn .spin-core {
+  font-size: 26px !important;
+}
+
+.app.is-landscape #betPlusBtn {
+  top: 18px;
+  left: 50px;
+  width: 76px !important;
+  height: 76px !important;
+}
+
+.app.is-landscape #betMinusBtn {
+  top: 310px;
+  left: 50px;
+  width: 76px !important;
+  height: 76px !important;
+}
+
+.app.is-landscape #speedBtn {
+  bottom: 0;
+  left: 0;
+  width: 66px !important;
+  height: 66px !important;
+}
+
+.app.is-landscape #autoBtn {
+  right: 0;
+  bottom: 0;
+  width: 66px !important;
+  height: 66px !important;
+}
+
+.app.is-landscape .result-panel,
+.app.is-landscape .debug-panel,
+.app.is-landscape .demo-note {
+  display: none !important;
+}
+
+.app.is-landscape .bonus-banner {
+  max-width: 430px;
+  font-size: 28px !important;
+}
+
+/* The logical canvas already handles scaling. Disable old viewport-width shrink rules. */
+@media (max-width: 780px) {
+  .game-shell {
+    width: 1024px !important;
+    padding-left: 24px !important;
+    padding-right: 24px !important;
+  }
+
+  .app.is-landscape .game-shell {
+    padding: 0 !important;
+  }
+}

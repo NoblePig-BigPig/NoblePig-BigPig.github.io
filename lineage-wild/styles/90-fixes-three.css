@@ -1,0 +1,324 @@
+/* ===== V36: exact paylines, centered symbols, seamless stop ===== */
+.reel > .slot-cell:not(.symbol-WILD):not(.symbol-BIG_WILD) > .symbol-image,
+.reel-spin-track .slot-cell:not(.symbol-WILD):not(.symbol-BIG_WILD) > .symbol-image,
+.reel-stop-track .slot-cell:not(.symbol-WILD):not(.symbol-BIG_WILD) > .symbol-image {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: 50% 50% !important;
+  transform: none !important;
+}
+.slot-cell.symbol-SCATTER .symbol-image {
+  object-fit: contain !important;
+  object-position: 50% 50% !important;
+  transform: none !important;
+}
+.reel-spin-track,
+.reel-stop-track {
+  top: var(--spin-track-top, 2px) !important;
+  gap: var(--spin-gap, 4px) !important;
+}
+.reel.is-stop-scrolling .reel-stop-track {
+  animation-timing-function: cubic-bezier(.08, .72, .16, 1) !important;
+}
+@keyframes reelStopScroll {
+  0% { transform: translate3d(0, var(--stop-start, 0px), 0); filter: blur(1px); }
+  72% { filter: blur(.2px); }
+  100% { transform: translate3d(0, 0, 0); filter: none; }
+}
+.reel.is-settling { animation: none !important; transform: none !important; filter: none !important; }
+
+/* ===== V38 Three.js renderer bridge ===== */
+.slot-board.three-slot-board {
+  position: relative;
+  display: block !important;
+  overflow: hidden;
+  isolation: isolate;
+  background:
+    linear-gradient(90deg,
+      rgba(18,16,18,.96) 0%, rgba(18,16,18,.96) 16.666%,
+      rgba(11,20,35,.96) 16.666%, rgba(11,20,35,.96) 33.333%,
+      rgba(38,15,19,.96) 33.333%, rgba(38,15,19,.96) 50%,
+      rgba(42,31,9,.96) 50%, rgba(42,31,9,.96) 66.666%,
+      rgba(11,31,19,.96) 66.666%, rgba(11,31,19,.96) 83.333%,
+      rgba(18,16,18,.96) 83.333%, rgba(18,16,18,.96) 100%);
+}
+
+.three-slot-canvas {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  touch-action: none;
+  pointer-events: none;
+}
+
+.slot-board.three-slot-board > .reel,
+.slot-board.three-slot-board > .slot-cell {
+  display: none !important;
+}
+
+/* Paylines and symbol highlights are rendered by the engine renderer port. */
+.board-frame.uses-three-renderer > .payline-layer {
+  display: none !important;
+}
+
+.board-frame.uses-three-renderer.is-win-presentation .three-slot-canvas {
+  filter: none !important;
+}
+
+/* ===== V41 language switch and adaptive metric values ===== */
+.language-button {
+  width: 52px;
+  height: 40px;
+  justify-self: end;
+  border: 1px solid rgba(219, 181, 100, .38);
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(53, 45, 49, .96), rgba(17, 14, 18, .98));
+  color: #f1d89a;
+  font-family: Georgia, 'Noto Serif TC', serif;
+  font-size: 14px;
+  font-weight: 800;
+  letter-spacing: .04em;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.05), 0 7px 18px rgba(0,0,0,.28);
+  cursor: pointer;
+}
+
+.language-button:hover {
+  filter: brightness(1.12);
+}
+
+.metric-card-with-icon .metric-copy strong {
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden !important;
+  text-overflow: clip !important;
+  white-space: nowrap !important;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: 0 !important;
+}
+
+.app.is-landscape .topbar {
+  width: 218px !important;
+  grid-template-columns: 40px minmax(0, 1fr) 40px !important;
+  gap: 4px !important;
+}
+
+.app.is-landscape .icon-button,
+.app.is-landscape .language-button {
+  width: 40px !important;
+  height: 40px !important;
+}
+
+.app.is-landscape .language-button {
+  border-radius: 10px;
+  font-size: 11px;
+}
+
+body[data-locale="en"] .mode-label,
+body[data-locale="en"] .buy-bonus-title,
+body[data-locale="en"] .catalog-adjust-label {
+  letter-spacing: .035em !important;
+}
+
+/* V46: win presentation animation durations follow the live 1x/2x setting. */
+.app {
+  --win-enter-opacity-duration: 160ms;
+  --win-enter-transform-duration: 220ms;
+  --win-value-transform-duration: 360ms;
+  --win-value-opacity-duration: 220ms;
+  --win-value-filter-duration: 280ms;
+  --win-total-reveal-duration: 320ms;
+  --win-total-reveal-opacity-duration: 210ms;
+}
+
+.app[data-presentation-speed="turbo"] {
+  --win-enter-opacity-duration: 70ms;
+  --win-enter-transform-duration: 95ms;
+  --win-value-transform-duration: 145ms;
+  --win-value-opacity-duration: 90ms;
+  --win-value-filter-duration: 115ms;
+  --win-total-reveal-duration: 230ms;
+  --win-total-reveal-opacity-duration: 150ms;
+}
+
+.win-presentation {
+  transition-duration: var(--win-enter-opacity-duration), var(--win-enter-transform-duration) !important;
+}
+
+.win-base-amount,
+.win-multiplier,
+.win-final-amount {
+  transition-duration:
+    var(--win-value-transform-duration),
+    var(--win-value-opacity-duration),
+    var(--win-value-filter-duration) !important;
+}
+
+.win-final-amount {
+  backface-visibility: hidden;
+  will-change: transform, opacity !important;
+  transition-property: transform, opacity !important;
+}
+
+.win-equation.stage-total .win-final-amount {
+  animation: none !important;
+  transition-duration:
+    var(--win-total-reveal-duration),
+    var(--win-total-reveal-opacity-duration) !important;
+  transition-timing-function:
+    cubic-bezier(0.22, 1, 0.36, 1),
+    ease-out !important;
+}
+
+/* V51: real soul-card artwork replaces text glyph placeholders. */
+.card-medallion {
+  overflow: hidden !important;
+  padding: 0 !important;
+  isolation: isolate;
+}
+
+.card-medallion::after {
+  content: none !important;
+  display: none !important;
+}
+
+.card-medallion-art {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  border-radius: inherit;
+  pointer-events: none;
+  user-select: none;
+}
+
+.card-effect {
+  display: -webkit-box;
+  overflow: hidden;
+  color: #d9d0c2;
+  font-size: 12px;
+  line-height: 1.38;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 2;
+}
+
+.catalog-fixed-slot {
+  isolation: isolate;
+}
+
+.catalog-fixed-slot-art {
+  position: absolute;
+  z-index: 0;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 28%;
+  opacity: .82;
+  filter: saturate(1.08) contrast(1.06) brightness(.82);
+  pointer-events: none;
+  user-select: none;
+}
+
+.catalog-fixed-slot::after {
+  content: "";
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(4,5,8,.12), rgba(4,5,8,.2) 42%, rgba(4,5,8,.9));
+  pointer-events: none;
+}
+
+.catalog-fixed-slot-label,
+.catalog-fixed-slot-quality {
+  z-index: 2 !important;
+}
+
+.catalog-fixed-slot-quality {
+  position: absolute;
+  right: 8px;
+  bottom: 8px;
+  padding: 2px 8px;
+  border: 1px solid rgba(255,255,255,.14);
+  border-radius: 999px;
+  color: #fff4d6;
+  background: rgba(7,8,12,.88);
+  box-shadow: 0 2px 8px rgba(0,0,0,.38);
+  font-size: 11px;
+  font-weight: 800;
+  line-height: 1.35;
+}
+
+.catalog-fixed-slot-placeholder {
+  background:
+    radial-gradient(circle at 50% 42%, var(--accent-soft, rgba(255,255,255,.08)), transparent 48%),
+    linear-gradient(180deg, rgba(255,255,255,.025), rgba(0,0,0,.16));
+}
+
+.collection-quality-row {
+  justify-content: space-between;
+}
+
+.collection-card-inventory {
+  margin-left: auto;
+  color: #d7c9ae;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.collection-view-meta {
+  justify-content: flex-start !important;
+}
+
+.collection-monster-name {
+  color: var(--accent-strong, #f1d89a);
+  font-family: Georgia, "Noto Serif TC", serif;
+  font-size: 18px;
+  line-height: 1.25;
+  letter-spacing: .02em;
+}
+
+.collection-view-description {
+  color: #c8beae !important;
+}
+
+@media (max-width: 560px) {
+  .collection-monster-name {
+    font-size: 16px;
+  }
+}
+
+/* V52.4: multiplier copy must remain crisp throughout the equation sequence.
+ * The old blur interpolation could leave the x multiplier looking censored or
+ * pixelated for most of its short hold, especially on CSS-scaled canvases. */
+.win-multiplier,
+.win-equation.stage-base .win-multiplier,
+.win-equation.stage-multiplier .win-multiplier,
+.win-equation.stage-total .win-multiplier,
+.win-equation.stage-grand-total .win-multiplier {
+  filter: none !important;
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: antialiased;
+  backface-visibility: visible;
+}
+
+.win-multiplier {
+  will-change: transform, opacity !important;
+  transition-property: transform, opacity !important;
+}
+
+.win-equation.stage-multiplier .win-multiplier {
+  transform: translateX(52%) scale(1) !important;
+}
+
+/* V52.7: keep landscape UI glyphs on the browser's precision text path. */
+.app.is-landscape .game-shell,
+.app.is-landscape .game-shell button,
+.app.is-landscape .game-shell strong,
+.app.is-landscape .game-shell span {
+  text-rendering: geometricPrecision;
+  -webkit-font-smoothing: subpixel-antialiased;
+}

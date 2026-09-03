@@ -1,0 +1,113 @@
+{
+  "schemaVersion": 1,
+  "configType": "LINEAGE_GAME_SCENARIO_CONFIG",
+  "gameId": "lineage-wild-collection",
+  "scenarioId": "scenario-normal-fg-small-to-sticky",
+  "name": "範例｜Normal FG 小獎穿插",
+  "description": "先固定 3 Scatter 進 Normal FG；第 2 次免費旋轉從 Active Math RNG 候選中挑 2~10x 合法盤。",
+  "tags": [
+    "EXAMPLE",
+    "FG",
+    "MATH+SCENARIO"
+  ],
+  "mathCompatibility": {
+    "configId": null,
+    "modelId": null,
+    "strict": false
+  },
+  "runtime": {
+    "resetGameStateOnStart": true,
+    "stopWhenComplete": true,
+    "repeat": false,
+    "accounting": "scenario"
+  },
+  "steps": [
+    {
+      "id": "enter-normal-fg",
+      "label": "Base｜固定 3 Scatter 觸發 Normal FG",
+      "when": {
+        "mode": "base"
+      },
+      "board": {
+        "source": "fixed",
+        "maxAttempts": 1,
+        "reels": [
+          [
+            "TEN",
+            "J",
+            "Q",
+            "K",
+            "A"
+          ],
+          [
+            "SCATTER",
+            "J",
+            "Q",
+            "K",
+            "A"
+          ],
+          [
+            "TEN",
+            "SCATTER",
+            "Q",
+            "K",
+            "A"
+          ],
+          [
+            "TEN",
+            "J",
+            "SCATTER",
+            "K",
+            "A"
+          ],
+          [
+            "TEN",
+            "J",
+            "Q",
+            "K",
+            "A"
+          ],
+          [
+            "A",
+            "Q",
+            "J",
+            "K",
+            "TEN"
+          ]
+        ],
+        "constraints": {}
+      },
+      "assertions": {
+        "scatterCount": 3,
+        "bonusTriggered": "normal"
+      }
+    },
+    {
+      "id": "fg-small",
+      "label": "FG 第 2 局｜2~10x Math 合法盤",
+      "when": {
+        "mode": "normal",
+        "freeSpinIndex": 2
+      },
+      "board": {
+        "source": "constraints",
+        "maxAttempts": 800,
+        "reels": null,
+        "constraints": {
+          "targetWinX": {
+            "min": 2,
+            "max": 10
+          },
+          "scatterCount": 0
+        }
+      },
+      "assertions": {
+        "winX": {
+          "min": 2,
+          "max": 10
+        },
+        "scatterCount": 0
+      }
+    }
+  ]
+}

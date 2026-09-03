@@ -1,0 +1,19 @@
+Standalone v10 build checks
+
+- Reachable import-map entries: 71 (70 embedded JS + Three.js vendor URL)
+- Embedded module syntax errors: 0
+- Deprecated live modules removed from import map:
+  - mountDebugConsole.js
+  - PayoutDirector.js
+  - MathSimulator.js
+- Deprecated UI/control terms absent from standalone bundle:
+  - GUARDED RNG
+  - 下一轉指定
+  - 配彩導演
+  - force-big-win
+- Math JSON examples: schema v3 PASS
+- Scenario JSON example: schema v1 PASS
+- Scenario functional flow: fixed 3 Scatter -> Normal FG -> unmatched Math RNG -> constraints step -> COMPLETED PASS
+- Scenario runtime accounting remains separated from Production runtime/pool PASS
+
+Note: browser automation in this execution environment blocks navigation by administrator policy, so file:// browser smoke could not be run here. The standalone resource embedding architecture is inherited from the prior file-direct build; no new external local module/resource loads were added.

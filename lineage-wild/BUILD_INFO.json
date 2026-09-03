@@ -1,0 +1,11 @@
+{
+  "product": "Lineage Wild Standalone Math + Scenario Server",
+  "version": "10.0.0",
+  "architecture": "config-first math + scenario engine",
+  "mathConfigType": "LINEAGE_GAME_MATH_CONFIG",
+  "mathSchemaVersion": 3,
+  "scenarioConfigType": "LINEAGE_GAME_SCENARIO_CONFIG",
+  "scenarioSchemaVersion": 1,
+  "standalone": true,
+  "deprecatedFlowsBundled": false
+}

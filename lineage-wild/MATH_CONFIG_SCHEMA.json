@@ -1,0 +1,812 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.local/lineage-game-math-config-v3.schema.json",
+  "title": "Lineage Wild Complete Game Math Config",
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "configType",
+    "gameId",
+    "configId",
+    "name",
+    "profile",
+    "policy"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": 3
+    },
+    "configType": {
+      "const": "LINEAGE_GAME_MATH_CONFIG"
+    },
+    "gameId": {
+      "const": "lineage-wild-collection"
+    },
+    "configId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "name": {
+      "type": "string",
+      "minLength": 1
+    },
+    "description": {
+      "type": "string"
+    },
+    "tags": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "createdAt": {
+      "type": "string"
+    },
+    "updatedAt": {
+      "type": "string"
+    },
+    "modelId": {
+      "type": "string"
+    },
+    "profile": {
+      "type": "object",
+      "required": [
+        "gameConfig",
+        "objectives",
+        "mathModel",
+        "pools",
+        "rngSpecification"
+      ],
+      "properties": {
+        "gameConfig": {
+          "$ref": "#/$defs/gameConfig"
+        },
+        "objectives": {
+          "$ref": "#/$defs/objectives"
+        },
+        "mathModel": {
+          "$ref": "#/$defs/mathModel"
+        },
+        "acceptanceTolerances": {
+          "$ref": "#/$defs/acceptanceTolerances"
+        },
+        "pools": {
+          "$ref": "#/$defs/pools"
+        },
+        "rngSpecification": {
+          "$ref": "#/$defs/rngSpecification"
+        }
+      },
+      "additionalProperties": true
+    },
+    "policy": {
+      "type": "object",
+      "required": [
+        "productionRngOnly",
+        "playerPoolMayAlterOutcome",
+        "housePoolMayAlterOutcome",
+        "qaOutcomeOverridesAllowedInProduction"
+      ],
+      "properties": {
+        "productionRngOnly": {
+          "const": true
+        },
+        "playerPoolMayAlterOutcome": {
+          "const": false
+        },
+        "housePoolMayAlterOutcome": {
+          "const": false
+        },
+        "qaOutcomeOverridesAllowedInProduction": {
+          "const": false
+        }
+      }
+    }
+  },
+  "$defs": {
+    "gameConfig": {
+      "type": "object",
+      "required": [
+        "rows",
+        "reels",
+        "maxWinMultiplier",
+        "paytableReferenceBet",
+        "freeSpinRetrigger",
+        "betOptions",
+        "bonusBuyMultipliers",
+        "colors",
+        "symbols",
+        "paylines",
+        "mathExtensions"
+      ],
+      "properties": {
+        "schemaVersion": {
+          "type": "number"
+        },
+        "gameId": {
+          "type": "string"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "rows": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "reels": {
+          "type": "integer",
+          "minimum": 3
+        },
+        "maxWinMultiplier": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "paytableReferenceBet": {
+          "type": "number",
+          "exclusiveMinimum": 0
+        },
+        "freeSpinRetrigger": {
+          "type": "object",
+          "properties": {
+            "2": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "3": {
+              "type": "integer",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": {
+            "type": "integer",
+            "minimum": 0
+          }
+        },
+        "betOptions": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        },
+        "catalogRules": {
+          "type": "object"
+        },
+        "bonusBuyMultipliers": {
+          "type": "object",
+          "properties": {
+            "bonus-hunt": {
+              "type": "number",
+              "minimum": 0
+            },
+            "four-horsemen": {
+              "type": "number",
+              "minimum": 0
+            },
+            "normal": {
+              "type": "number",
+              "minimum": 0
+            },
+            "super": {
+              "type": "number",
+              "minimum": 0
+            }
+          },
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "featureSpinModes": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "colors": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "object",
+            "required": [
+              "reel",
+              "multipliers"
+            ],
+            "properties": {
+              "name": {
+                "type": "string"
+              },
+              "shortName": {
+                "type": "string"
+              },
+              "reel": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "multipliers": {
+                "type": "array",
+                "minItems": 1,
+                "items": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                }
+              },
+              "cardCostFactor": {
+                "type": "number",
+                "minimum": 0
+              }
+            },
+            "additionalProperties": true
+          }
+        },
+        "cardLevelCostFactor": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "symbols": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "required": [
+              "id",
+              "weight",
+              "pays"
+            ],
+            "properties": {
+              "id": {
+                "type": "string"
+              },
+              "label": {
+                "type": "string"
+              },
+              "weight": {
+                "type": "number",
+                "minimum": 0
+              },
+              "pays": {
+                "type": "object",
+                "additionalProperties": {
+                  "type": "number",
+                  "minimum": 0
+                }
+              },
+              "mathTier": {
+                "enum": [
+                  "low",
+                  "mid",
+                  "high"
+                ]
+              }
+            }
+          }
+        },
+        "paylines": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "integer",
+              "minimum": 0
+            }
+          }
+        },
+        "initialCardInventory": {
+          "type": "object"
+        },
+        "cardNames": {
+          "type": "object"
+        },
+        "mathExtensions": {
+          "type": "object",
+          "required": [
+            "wildReels",
+            "scatterReels",
+            "freeGameStartingSpins",
+            "longWild",
+            "fourHorsemen",
+            "legendaryCardBoost",
+            "paylineRules",
+            "freeGameTriggerScatters",
+            "cardEconomy",
+            "wildExpansionRules",
+            "maxWinRules",
+            "stickyRisk"
+          ],
+          "properties": {
+            "wildReels": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "scatterReels": {
+              "type": "array",
+              "items": {
+                "type": "integer",
+                "minimum": 0
+              }
+            },
+            "freeGameStartingSpins": {
+              "type": "object",
+              "required": [
+                "normal",
+                "super"
+              ],
+              "properties": {
+                "normal": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "super": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "longWild": {
+              "type": "object",
+              "required": [
+                "multiplierSubtractX",
+                "floorMultiplier",
+                "lowRiskBiasEnabled"
+              ],
+              "properties": {
+                "multiplierSubtractX": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "floorMultiplier": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "lowRiskBiasEnabled": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "fourHorsemen": {
+              "type": "object",
+              "properties": {
+                "guaranteedWildReels": {
+                  "type": "integer",
+                  "minimum": 0
+                },
+                "allowScatter": {
+                  "type": "boolean"
+                }
+              }
+            },
+            "legendaryCardBoost": {
+              "type": "object",
+              "required": [
+                "triggerLevel",
+                "chance",
+                "multipliers"
+              ],
+              "properties": {
+                "chance": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                },
+                "multipliers": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "array",
+                    "items": {
+                      "type": "number",
+                      "exclusiveMinimum": 0
+                    }
+                  }
+                },
+                "triggerLevel": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "paylineRules": {
+              "type": "object",
+              "properties": {
+                "direction": {
+                  "enum": [
+                    "left-to-right"
+                  ]
+                },
+                "minimumMatch": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "wildMultiplierAggregation": {
+                  "enum": [
+                    "sum"
+                  ]
+                },
+                "scatterPaysOnLines": {
+                  "const": false
+                },
+                "allWildFallbackSymbol": {
+                  "type": "string",
+                  "minLength": 1
+                }
+              }
+            },
+            "freeGameTriggerScatters": {
+              "type": "object",
+              "required": [
+                "normal",
+                "super"
+              ],
+              "properties": {
+                "normal": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "super": {
+                  "type": "integer",
+                  "minimum": 1
+                }
+              }
+            },
+            "cardEconomy": {
+              "type": "object",
+              "required": [
+                "maxInventoryPerCard",
+                "collectionChance",
+                "collectionLevelWeights",
+                "minimumCost",
+                "costRoundingUnit"
+              ],
+              "properties": {
+                "maxInventoryPerCard": {
+                  "type": "integer",
+                  "minimum": 1
+                },
+                "collectionLevelWeights": {
+                  "type": "object",
+                  "additionalProperties": {
+                    "type": "number",
+                    "minimum": 0
+                  }
+                },
+                "minimumCost": {
+                  "type": "number",
+                  "minimum": 0
+                },
+                "costRoundingUnit": {
+                  "type": "number",
+                  "exclusiveMinimum": 0
+                },
+                "collectionChance": {
+                  "type": "number",
+                  "minimum": 0,
+                  "maximum": 1
+                }
+              }
+            },
+            "wildExpansionRules": {
+              "type": "object",
+              "required": [
+                "requiresWinningPayline",
+                "stickyInFreeGame",
+                "normalColorMustMatchReel",
+                "superAnyColorAnyWildReel"
+              ],
+              "properties": {
+                "requiresWinningPayline": {
+                  "type": "boolean"
+                },
+                "stickyInFreeGame": {
+                  "type": "boolean"
+                },
+                "normalColorMustMatchReel": {
+                  "type": "boolean"
+                },
+                "superAnyColorAnyWildReel": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "maxWinRules": {
+              "type": "object",
+              "required": [
+                "baseScope",
+                "freeGameScope",
+                "terminateFeatureOnHit"
+              ],
+              "properties": {
+                "baseScope": {
+                  "enum": [
+                    "spin"
+                  ]
+                },
+                "freeGameScope": {
+                  "enum": [
+                    "feature",
+                    "spin"
+                  ]
+                },
+                "terminateFeatureOnHit": {
+                  "type": "boolean"
+                }
+              },
+              "additionalProperties": false
+            },
+            "stickyRisk": {
+              "type": "object",
+              "required": [
+                "dangerousPairReels"
+              ],
+              "properties": {
+                "dangerousPairReels": {
+                  "type": "array",
+                  "minItems": 2,
+                  "maxItems": 2,
+                  "items": {
+                    "type": "integer",
+                    "minimum": 0
+                  },
+                  "uniqueItems": true
+                }
+              },
+              "additionalProperties": false
+            }
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "objectives": {
+      "type": "object",
+      "properties": {
+        "targetRtp": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 200
+        },
+        "targetBaseRtp": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 200
+        },
+        "targetFgTriggerPct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "targetCycleHitPct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "minExpansionSmallPct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "maxExpansionBigPct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "maxFgP99X": {
+          "type": "number",
+          "minimum": 0
+        },
+        "maxDangerousPairPct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "maxFullStickyPct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        },
+        "maxFgMaxWinPct": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 100
+        }
+      },
+      "additionalProperties": true
+    },
+    "mathModel": {
+      "type": "object",
+      "required": [
+        "payScale",
+        "symbolWeightScale",
+        "wildChance",
+        "multiplierDecayByColor",
+        "stickyChanceScale",
+        "lowRiskLongWild",
+        "scatter"
+      ],
+      "properties": {
+        "version": {
+          "type": "integer"
+        },
+        "payScale": {
+          "const": 1
+        },
+        "symbolWeightScale": {
+          "type": "object",
+          "properties": {
+            "low": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "mid": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            },
+            "high": {
+              "type": "number",
+              "exclusiveMinimum": 0
+            }
+          }
+        },
+        "wildChance": {
+          "type": "object",
+          "properties": {
+            "base": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "normal": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "super": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        },
+        "multiplierDecayByColor": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "exclusiveMinimum": 0,
+            "maximum": 1
+          }
+        },
+        "stickyChanceScale": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "number",
+            "exclusiveMinimum": 0
+          }
+        },
+        "lowRiskLongWild": {
+          "type": "object",
+          "properties": {
+            "freeOnly": {
+              "type": "boolean"
+            },
+            "colorWeights": {
+              "type": "object",
+              "additionalProperties": {
+                "type": "number",
+                "exclusiveMinimum": 0
+              }
+            },
+            "multiplierDecayScale": {
+              "type": "number",
+              "exclusiveMinimum": 0,
+              "maximum": 1
+            }
+          }
+        },
+        "scatter": {
+          "type": "object",
+          "properties": {
+            "base4": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "base3": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "base2": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "bonus4": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "bonus3": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "bonus2": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "fg3": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            },
+            "fg2": {
+              "type": "number",
+              "minimum": 0,
+              "maximum": 1
+            }
+          }
+        }
+      },
+      "additionalProperties": true
+    },
+    "acceptanceTolerances": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "number",
+        "minimum": 0
+      }
+    },
+    "pools": {
+      "type": "object",
+      "properties": {
+        "openingHouseReserve": {
+          "type": "number",
+          "minimum": 0
+        },
+        "minAvailableReserve": {
+          "type": "number",
+          "minimum": 0
+        },
+        "concurrentPlayers": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "rngSpecification": {
+      "type": "object",
+      "required": [
+        "algorithm",
+        "wordBits",
+        "mapping",
+        "cryptographic"
+      ],
+      "properties": {
+        "algorithm": {
+          "const": "WebCrypto.getRandomValues"
+        },
+        "wordBits": {
+          "const": 32
+        },
+        "mapping": {
+          "const": "uint32 / 2^32"
+        },
+        "cryptographic": {
+          "const": true
+        },
+        "simulationOverride": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": true
+    }
+  },
+  "additionalProperties": true
+}

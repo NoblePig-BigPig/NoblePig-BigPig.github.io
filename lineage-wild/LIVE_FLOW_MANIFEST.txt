@@ -1,0 +1,21 @@
+LIVE CONTROL FLOWS
+
+Math Config:
+- create / import / export / rename / delete / activate / retest
+- production statistics reset
+
+Scenario Config:
+- create / import / export / rename / delete
+- activate / restart / stop
+- separate scenario statistics reset
+
+Scenario board sources:
+- RNG: active Math RNG
+- FIXED: pre-expansion board patch, then active Math evaluator
+- CONSTRAINTS: rejection sampling from active Math RNG candidates
+
+REMOVED FROM LIVE BUNDLE
+- old PayoutDirector RANDOM/SCRIPT/GUARDED flow
+- old target-next-spin award selector
+- old Debug force-outcome console
+- old MathSimulator/Calibration Lab front-end flow

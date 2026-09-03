@@ -1,0 +1,621 @@
+{
+  "schemaVersion": 3,
+  "configType": "LINEAGE_GAME_MATH_CONFIG",
+  "gameId": "lineage-wild-collection",
+  "configId": "production-base",
+  "name": "Production Baseline",
+  "description": "完整 JSON 驅動的 Production-oriented baseline。",
+  "tags": [
+    "BASE"
+  ],
+  "createdAt": "2026-09-03T00:00:00.000Z",
+  "updatedAt": "2026-09-03T00:00:00.000Z",
+  "modelId": "generated-on-import",
+  "profile": {
+    "gameConfig": {
+      "schemaVersion": 1,
+      "gameId": "lineage-wild-collection",
+      "displayName": "大軍降臨",
+      "rows": 5,
+      "reels": 6,
+      "maxWinMultiplier": 15000,
+      "paytableReferenceBet": 2,
+      "freeSpinRetrigger": {
+        "2": 2,
+        "3": 4
+      },
+      "betOptions": [
+        50,
+        100,
+        200,
+        500,
+        1000,
+        1500,
+        2000,
+        5000
+      ],
+      "catalogRules": {
+        "maxSelectedColors": 3,
+        "maxCardsPerColor": 1
+      },
+      "bonusBuyMultipliers": {
+        "bonus-hunt": 3,
+        "four-horsemen": 60,
+        "normal": 100,
+        "super": 200
+      },
+      "featureSpinModes": [
+        "bonus-hunt",
+        "four-horsemen"
+      ],
+      "colors": {
+        "blue": {
+          "name": "蒼藍",
+          "shortName": "藍",
+          "reel": 1,
+          "mark": "I",
+          "multipliers": [
+            2,
+            3,
+            4
+          ],
+          "cardCostFactor": 1,
+          "theme": {
+            "accent": "#6ca7ff",
+            "accentStrong": "#9cc7ff",
+            "soft": "rgba(77, 141, 255, 0.18)",
+            "panel": "linear-gradient(180deg, rgba(20,32,58,.94), rgba(10,14,24,.96))",
+            "swatch": "linear-gradient(180deg, rgba(57,103,197,.86), rgba(23,46,92,.96))"
+          }
+        },
+        "red": {
+          "name": "赤紅",
+          "shortName": "紅",
+          "reel": 2,
+          "mark": "II",
+          "multipliers": [
+            5,
+            6,
+            7,
+            8,
+            9
+          ],
+          "cardCostFactor": 1.2,
+          "theme": {
+            "accent": "#ea7470",
+            "accentStrong": "#ffb2a7",
+            "soft": "rgba(208, 76, 70, 0.18)",
+            "panel": "linear-gradient(180deg, rgba(55,23,28,.94), rgba(21,10,14,.96))",
+            "swatch": "linear-gradient(180deg, rgba(177,53,59,.88), rgba(83,24,28,.96))"
+          }
+        },
+        "gold": {
+          "name": "熾金",
+          "shortName": "黃",
+          "reel": 3,
+          "mark": "III",
+          "multipliers": [
+            10,
+            15,
+            20,
+            25
+          ],
+          "cardCostFactor": 1.5,
+          "theme": {
+            "accent": "#e4b956",
+            "accentStrong": "#f8df99",
+            "soft": "rgba(205, 154, 48, 0.2)",
+            "panel": "linear-gradient(180deg, rgba(54,42,20,.94), rgba(22,16,10,.96))",
+            "swatch": "linear-gradient(180deg, rgba(167,129,37,.88), rgba(91,67,14,.96))"
+          }
+        },
+        "green": {
+          "name": "翠綠",
+          "shortName": "綠",
+          "reel": 4,
+          "mark": "IV",
+          "multipliers": [
+            30,
+            40,
+            50,
+            75,
+            100,
+            200
+          ],
+          "cardCostFactor": 2,
+          "theme": {
+            "accent": "#6dc98a",
+            "accentStrong": "#b5e9c6",
+            "soft": "rgba(73, 168, 96, 0.19)",
+            "panel": "linear-gradient(180deg, rgba(24,50,36,.94), rgba(10,21,15,.96))",
+            "swatch": "linear-gradient(180deg, rgba(58,137,80,.88), rgba(26,69,40,.96))"
+          }
+        }
+      },
+      "cardLevelCostFactor": {
+        "1": 0.15,
+        "2": 0.3,
+        "3": 0.55,
+        "4": 0.9
+      },
+      "symbols": [
+        {
+          "id": "TEN",
+          "label": "10",
+          "weight": 20,
+          "pays": {
+            "3": 0.2,
+            "4": 0.6,
+            "5": 2,
+            "6": 6
+          },
+          "mathTier": "low"
+        },
+        {
+          "id": "J",
+          "label": "J",
+          "weight": 19,
+          "pays": {
+            "3": 0.4,
+            "4": 1,
+            "5": 3,
+            "6": 10
+          },
+          "mathTier": "low"
+        },
+        {
+          "id": "Q",
+          "label": "Q",
+          "weight": 18,
+          "pays": {
+            "3": 0.4,
+            "4": 1,
+            "5": 3,
+            "6": 10
+          },
+          "mathTier": "low"
+        },
+        {
+          "id": "K",
+          "label": "K",
+          "weight": 17,
+          "pays": {
+            "3": 0.4,
+            "4": 1,
+            "5": 3,
+            "6": 10
+          },
+          "mathTier": "low"
+        },
+        {
+          "id": "A",
+          "label": "A",
+          "weight": 16,
+          "pays": {
+            "3": 0.6,
+            "4": 2,
+            "5": 6,
+            "6": 20
+          },
+          "mathTier": "low"
+        },
+        {
+          "id": "EYE",
+          "label": "眼",
+          "weight": 11,
+          "pays": {
+            "3": 1,
+            "4": 3,
+            "5": 10,
+            "6": 30
+          },
+          "mathTier": "mid"
+        },
+        {
+          "id": "CUP",
+          "label": "杯",
+          "weight": 10,
+          "pays": {
+            "3": 1,
+            "4": 3,
+            "5": 10,
+            "6": 30
+          },
+          "mathTier": "mid"
+        },
+        {
+          "id": "SUN",
+          "label": "日",
+          "weight": 7,
+          "pays": {
+            "3": 2,
+            "4": 5,
+            "5": 15,
+            "6": 50
+          },
+          "mathTier": "high"
+        },
+        {
+          "id": "HAND",
+          "label": "手",
+          "weight": 6,
+          "pays": {
+            "3": 2,
+            "4": 5,
+            "5": 15,
+            "6": 50
+          },
+          "mathTier": "high"
+        },
+        {
+          "id": "FACE",
+          "label": "像",
+          "weight": 4,
+          "pays": {
+            "3": 4,
+            "4": 10,
+            "5": 30,
+            "6": 100
+          },
+          "mathTier": "high"
+        }
+      ],
+      "paylines": [
+        [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ],
+        [
+          1,
+          1,
+          1,
+          1,
+          1,
+          1
+        ],
+        [
+          2,
+          2,
+          2,
+          2,
+          2,
+          2
+        ],
+        [
+          3,
+          3,
+          3,
+          3,
+          3,
+          3
+        ],
+        [
+          4,
+          4,
+          4,
+          4,
+          4,
+          4
+        ],
+        [
+          0,
+          1,
+          0,
+          1,
+          0,
+          1
+        ],
+        [
+          1,
+          2,
+          1,
+          2,
+          1,
+          2
+        ],
+        [
+          2,
+          3,
+          2,
+          3,
+          2,
+          3
+        ],
+        [
+          3,
+          4,
+          3,
+          4,
+          3,
+          4
+        ],
+        [
+          1,
+          0,
+          1,
+          0,
+          1,
+          0
+        ],
+        [
+          2,
+          1,
+          2,
+          1,
+          2,
+          1
+        ],
+        [
+          3,
+          2,
+          3,
+          2,
+          3,
+          2
+        ],
+        [
+          4,
+          3,
+          4,
+          3,
+          4,
+          3
+        ],
+        [
+          0,
+          1,
+          2,
+          2,
+          1,
+          0
+        ],
+        [
+          1,
+          2,
+          3,
+          3,
+          2,
+          1
+        ],
+        [
+          2,
+          3,
+          4,
+          4,
+          3,
+          2
+        ],
+        [
+          4,
+          3,
+          2,
+          2,
+          3,
+          4
+        ],
+        [
+          3,
+          2,
+          1,
+          1,
+          2,
+          3
+        ],
+        [
+          2,
+          1,
+          0,
+          0,
+          1,
+          2
+        ]
+      ],
+      "initialCardInventory": {
+        "blue-lv1": 4,
+        "red-lv2": 3,
+        "gold-lv3": 2,
+        "green-lv4": 1
+      },
+      "cardNames": {
+        "blue-lv1": "霜影騎士",
+        "blue-lv2": "蒼月獵手",
+        "blue-lv3": "冰魄守衛",
+        "blue-lv4": "星霜領主",
+        "red-lv1": "熔獄執刑者",
+        "red-lv2": "赤焰魔像",
+        "red-lv3": "灰燼收割者",
+        "red-lv4": "煉火君王",
+        "gold-lv1": "金鬃天獸",
+        "gold-lv2": "日輪守望者",
+        "gold-lv3": "曜羽獅鷲",
+        "gold-lv4": "天穹聖凰",
+        "green-lv1": "翠毒夢魘",
+        "green-lv2": "森牙巨獸",
+        "green-lv3": "翡翠巫妖",
+        "green-lv4": "永夜森王"
+      },
+      "mathExtensions": {
+        "wildReels": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "scatterReels": [
+          1,
+          2,
+          3,
+          4
+        ],
+        "freeGameStartingSpins": {
+          "normal": 10,
+          "super": 10
+        },
+        "longWild": {
+          "multiplierSubtractX": 0,
+          "floorMultiplier": 1,
+          "lowRiskBiasEnabled": false
+        },
+        "fourHorsemen": {
+          "guaranteedWildReels": 3,
+          "allowScatter": false
+        },
+        "legendaryCardBoost": {
+          "chance": 0.72,
+          "multipliers": {
+            "blue": [
+              8,
+              12,
+              20
+            ],
+            "red": [
+              15,
+              25,
+              40
+            ],
+            "gold": [
+              50,
+              75,
+              100
+            ],
+            "green": [
+              250,
+              300,
+              500
+            ]
+          },
+          "triggerLevel": 4
+        },
+        "paylineRules": {
+          "direction": "left-to-right",
+          "minimumMatch": 3,
+          "wildMultiplierAggregation": "sum",
+          "scatterPaysOnLines": false,
+          "allWildFallbackSymbol": "A"
+        },
+        "freeGameTriggerScatters": {
+          "normal": 3,
+          "super": 4
+        },
+        "cardEconomy": {
+          "maxInventoryPerCard": 10,
+          "collectionLevelWeights": {
+            "1": 50,
+            "2": 28,
+            "3": 16,
+            "4": 6
+          },
+          "minimumCost": 10,
+          "costRoundingUnit": 10,
+          "collectionChance": 1.0
+        },
+        "wildExpansionRules": {
+          "requiresWinningPayline": true,
+          "stickyInFreeGame": true,
+          "normalColorMustMatchReel": true,
+          "superAnyColorAnyWildReel": true
+        },
+        "maxWinRules": {
+          "baseScope": "spin",
+          "freeGameScope": "feature",
+          "terminateFeatureOnHit": true
+        },
+        "stickyRisk": {
+          "dangerousPairReels": [
+            1,
+            2
+          ]
+        }
+      }
+    },
+    "objectives": {
+      "targetRtp": 96,
+      "targetBaseRtp": 62,
+      "targetFgTriggerPct": 4.5,
+      "targetCycleHitPct": 29,
+      "minExpansionSmallPct": 60,
+      "maxExpansionBigPct": 10,
+      "maxFgP99X": 200,
+      "maxDangerousPairPct": 1,
+      "maxFullStickyPct": 0.1,
+      "maxFgMaxWinPct": 0.1
+    },
+    "mathModel": {
+      "version": 3,
+      "payScale": 1,
+      "symbolWeightScale": {
+        "low": 1,
+        "mid": 1,
+        "high": 1
+      },
+      "wildChance": {
+        "base": 0.062,
+        "normal": 0.012,
+        "super": 0.018
+      },
+      "multiplierDecay": 0.15,
+      "multiplierDecayByColor": {
+        "blue": 0.15,
+        "red": 0.08,
+        "gold": 0.04,
+        "green": 0.02
+      },
+      "stickyChanceScale": {
+        "after0": 1,
+        "after1": 0.3,
+        "after2": 0.1,
+        "after3": 0.03,
+        "dangerousPair": 0.1
+      },
+      "lowRiskLongWild": {
+        "freeOnly": true,
+        "colorWeights": {
+          "blue": 12,
+          "red": 4,
+          "gold": 1.5,
+          "green": 0.4
+        },
+        "multiplierDecayScale": 0.5
+      },
+      "scatter": {
+        "base4": 0.012,
+        "base3": 0.033,
+        "base2": 0.055,
+        "bonus4": 0.06,
+        "bonus3": 0.165,
+        "bonus2": 0.1,
+        "fg3": 0.003,
+        "fg2": 0.01
+      }
+    },
+    "acceptanceTolerances": {
+      "rtpPt": 1,
+      "baseRtpPt": 5,
+      "fgTriggerPt": 0.6,
+      "cycleHitPt": 4,
+      "maxCi95Pt": 2.5
+    },
+    "pools": {
+      "openingHouseReserve": 1000000,
+      "minAvailableReserve": 250000,
+      "concurrentPlayers": 20
+    },
+    "rngSpecification": {
+      "algorithm": "WebCrypto.getRandomValues",
+      "wordBits": 32,
+      "mapping": "uint32 / 2^32",
+      "cryptographic": true,
+      "simulationOverride": "seeded deterministic RNG for validation only"
+    }
+  },
+  "policy": {
+    "productionRngOnly": true,
+    "playerPoolMayAlterOutcome": false,
+    "housePoolMayAlterOutcome": false,
+    "qaOutcomeOverridesAllowedInProduction": false
+  }
+}

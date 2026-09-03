@@ -1,0 +1,200 @@
+/* V21 stability fixes: responsive shell, no reel overflow, clean BIG_WILD stop frames */
+.game-shell {
+  width: min(100%, 760px) !important;
+}
+.board-frame {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+}
+.slot-board {
+  width: 100%;
+  max-width: 100%;
+  min-width: 0;
+  min-height: 0 !important;
+  height: auto;
+  aspect-ratio: 6 / 5;
+}
+.reel,
+.reel-headings > span,
+.slot-cell,
+.reel-spin-track,
+.reel-stop-track {
+  min-width: 0;
+  max-width: 100%;
+}
+.is-big-wild-cell { overflow: hidden; }
+@media (max-width: 780px) {
+  .game-shell {
+    width: 100% !important;
+    padding-left: 8px;
+    padding-right: 8px;
+  }
+  .board-frame { padding: 7px; }
+  .slot-board { gap: 2px; }
+}
+
+
+/* V22 supplied-background and top battle-video integration */
+body {
+  background-color: #080506;
+  background-image:
+    linear-gradient(180deg, rgba(4, 3, 5, 0.18), rgba(4, 3, 5, 0.42) 58%, rgba(3, 3, 5, 0.8)),
+    url('../assets/backgrounds/mainBG.png');
+  background-position: center top;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: scroll;
+}
+
+body.is-free-mode {
+  background-image:
+    linear-gradient(180deg, rgba(14, 3, 1, 0.08), rgba(10, 2, 1, 0.28) 56%, rgba(4, 2, 2, 0.76)),
+    url('../assets/backgrounds/freeBG.png');
+}
+
+.game-shell {
+  background:
+    linear-gradient(180deg, rgba(4, 3, 5, 0.08), rgba(6, 4, 6, 0.54) 56%, rgba(4, 4, 6, 0.94) 88%, #050507 100%) !important;
+}
+
+.battle-stage {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 7;
+  margin: 4px 0 0;
+  overflow: hidden;
+  border: 1px solid rgba(223, 190, 120, 0.24);
+  border-bottom: 0;
+  border-radius: 18px 18px 0 0;
+  background: #080608;
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, 0.025),
+    0 16px 30px rgba(0, 0, 0, 0.34);
+}
+
+.fight-video {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 46%;
+  background: #080608;
+  transform: translateZ(0);
+  backface-visibility: hidden;
+  will-change: contents;
+  contain: paint;
+}
+
+.battle-stage-shade {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.22), transparent 20%, transparent 80%, rgba(0, 0, 0, 0.22)),
+    linear-gradient(180deg, rgba(0, 0, 0, 0.04), transparent 50%, rgba(4, 3, 5, 0.9) 100%);
+  box-shadow: inset 0 0 38px rgba(0, 0, 0, 0.24);
+}
+
+.board-frame {
+  margin-top: -2px !important;
+  border-radius: 0 0 18px 18px;
+}
+
+@media (max-width: 560px) {
+  body {
+    background-attachment: scroll;
+  }
+
+  .battle-stage {
+    aspect-ratio: 16 / 7.6;
+    border-radius: 14px 14px 0 0;
+  }
+
+  .fight-video {
+    object-position: center 48%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fight-video {
+    visibility: hidden;
+  }
+
+  .battle-stage {
+    background: #080608 url('../assets/video/fight-poster.png') center 46% / cover no-repeat;
+  }
+}
+
+/* ===== V23 symbol artwork vertical alignment =====
+ * Move the bitmap artwork itself upward inside each reel cell.
+ * This does not move or resize the reel cell, so all five row bands remain unchanged.
+ */
+.reel > .slot-cell:not(.symbol-BIG_WILD) > .symbol-image,
+.reel-spin-track .slot-cell:not(.symbol-BIG_WILD) > .symbol-image,
+.reel-stop-track .slot-cell:not(.symbol-BIG_WILD) > .symbol-image {
+  transform: translateY(var(--symbol-offset-y, -4%)) scale(var(--symbol-scale, 1)) !important;
+}
+
+/* Normalize the visible size of each symbol bitmap.
+ * Some source PNGs contain different amounts of transparent padding,
+ * so we compensate per symbol at the CSS level instead of resizing the reel cell.
+ */
+.slot-cell.symbol-K { --symbol-scale: .93; --symbol-offset-y: -3%; }
+.slot-cell.symbol-J { --symbol-scale: .99; --symbol-offset-y: -4%; }
+.slot-cell.symbol-Q { --symbol-scale: 1.06; --symbol-offset-y: -4%; }
+.slot-cell.symbol-A { --symbol-scale: 1.12; --symbol-offset-y: -4%; }
+.slot-cell.symbol-TEN { --symbol-scale: 1.16; --symbol-offset-y: -4%; }
+.slot-cell.symbol-EYE { --symbol-scale: 1.08; --symbol-offset-y: -4%; }
+.slot-cell.symbol-CUP { --symbol-scale: 1.03; --symbol-offset-y: -4%; }
+.slot-cell.symbol-SUN { --symbol-scale: 1.13; --symbol-offset-y: -4%; }
+.slot-cell.symbol-HAND { --symbol-scale: 1.12; --symbol-offset-y: -4%; }
+.slot-cell.symbol-FACE { --symbol-scale: 1.18; --symbol-offset-y: -4%; }
+
+/* Full-reel WILD artwork must continue filling the entire reel without offset. */
+.reel > .big-wild-card > .symbol-image,
+.big-wild-card > .symbol-image {
+  transform: none !important;
+}
+
+
+/* ===== V25 FreeGame interaction and prompt-layer fixes ===== */
+.board-frame {
+  isolation: isolate;
+}
+
+/* Reel spin/stop tracks reach z-index 30 and full-reel WILDs reach z-index 20.
+ * Feature prompts must sit above both, including EXTRA FREE SPIN messages. */
+.bonus-banner {
+  z-index: 500 !important;
+  isolation: isolate;
+  transform-style: flat;
+}
+
+.bonus-banner::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  inset: -18px;
+  border-radius: 18px;
+  background: radial-gradient(circle at 50% 50%, rgba(0, 0, 0, .92), rgba(0, 0, 0, .74) 62%, transparent 100%);
+  filter: blur(2px);
+  pointer-events: none;
+}
+
+/* Keep the two action buttons in one stable locked state for the whole FG.
+ * They no longer brighten during the gap between automatic free spins. */
+.app.is-free-sequence #spinBtn,
+.app.is-free-sequence #autoBtn:not(.is-stop-active) {
+  opacity: .46 !important;
+  filter: grayscale(.12) brightness(.78);
+}
+
+.app.is-free-sequence #spinBtn img,
+.app.is-free-sequence #autoBtn:not(.is-stop-active) img {
+  filter: drop-shadow(0 6px 7px rgba(0, 0, 0, .62)) !important;
+}
+
+#autoBtn.is-free-locked {
+  pointer-events: none;
+}

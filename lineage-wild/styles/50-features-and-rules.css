@@ -1,0 +1,691 @@
+/* ===== V27: game manual, board chest, and four-way bonus buy ===== */
+.topbar {
+  grid-template-columns: 44px 1fr 44px;
+}
+
+.topbar-spacer {
+  display: block;
+  width: 44px;
+  height: 1px;
+}
+
+.board-chest-button {
+  position: absolute !important;
+  z-index: 18;
+  top: -54px;
+  right: 8px;
+  width: 68px !important;
+  height: 62px !important;
+  transform-origin: 70% 80%;
+  transition: transform 150ms ease, filter 150ms ease;
+}
+
+.board-chest-button:hover:not(:disabled) {
+  transform: translateY(-2px) scale(1.04);
+  filter: brightness(1.08);
+}
+
+.board-chest-button .chest-count {
+  right: -1px;
+  bottom: -1px;
+}
+
+.feature-actions-two {
+  grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+  gap: 14px;
+}
+
+.feature-actions-two .buy-bonus-button {
+  min-width: 0;
+}
+
+.feature-actions-two .buy-bonus-button.is-active img {
+  filter: drop-shadow(0 0 9px rgba(255, 194, 63, .68)) drop-shadow(0 5px 7px rgba(0, 0, 0, .55));
+}
+
+.feature-actions-two .buy-bonus-button.is-active small {
+  color: #ffd77d;
+}
+
+/* Bonus buy */
+.bonus-buy-panel {
+  width: min(96vw, 940px);
+  max-height: min(94dvh, 920px);
+  background:
+    radial-gradient(circle at 50% 0, rgba(95, 55, 30, .24), transparent 32%),
+    linear-gradient(180deg, rgba(20, 18, 22, .99), rgba(7, 7, 10, .995));
+}
+
+.bonus-buy-header {
+  align-items: center;
+}
+
+.bonus-buy-subtitle {
+  margin: 6px 0 0;
+  color: #958a7c;
+  font-size: 12px;
+  line-height: 1.45;
+}
+
+.bonus-buy-betbar {
+  display: grid;
+  grid-template-columns: 52px minmax(160px, 260px) 52px;
+  justify-content: center;
+  align-items: center;
+  gap: 12px;
+  margin: 18px auto 16px;
+}
+
+.bonus-buy-betbar > div {
+  min-height: 64px;
+  display: grid;
+  place-items: center;
+  align-content: center;
+  border: 1px solid rgba(255,255,255,.11);
+  border-radius: 12px;
+  background: linear-gradient(180deg, rgba(42,39,45,.94), rgba(12,11,15,.98));
+  box-shadow: inset 0 0 18px rgba(0,0,0,.35);
+}
+
+.bonus-buy-betbar span,
+.bonus-buy-betbar strong {
+  display: block;
+  text-align: center;
+}
+
+.bonus-buy-betbar span {
+  color: #91887e;
+  font-size: 11px;
+}
+
+.bonus-buy-betbar strong {
+  margin-top: 3px;
+  color: #f6d17f;
+  font-size: 25px;
+}
+
+.bonus-buy-bet-button {
+  width: 52px;
+  height: 52px;
+  border: 1px solid rgba(255,255,255,.15);
+  border-radius: 9px;
+  background: linear-gradient(180deg, #49484d, #222227);
+  color: #fff;
+  font-size: 29px;
+  font-weight: 900;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,.1), 0 5px 14px rgba(0,0,0,.28);
+}
+
+.bonus-buy-bet-button:disabled {
+  opacity: .35;
+}
+
+.bonus-buy-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  grid-auto-rows: 1fr;
+  align-items: stretch;
+  gap: 12px;
+  padding: 0 18px 18px;
+}
+
+.bonus-option {
+  position: relative;
+  display: flex;
+  min-height: 330px;
+  flex-direction: column;
+  padding: 18px 16px 0;
+  overflow: hidden;
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 14px;
+  background:
+    radial-gradient(circle at 50% 20%, rgba(255,255,255,.08), transparent 32%),
+    linear-gradient(180deg, rgba(37,34,41,.97), rgba(13,12,17,.99));
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.02), 0 12px 30px rgba(0,0,0,.25);
+}
+
+.bonus-option::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: .4;
+}
+
+.bonus-option-hunt::before { background: radial-gradient(circle at 50% 20%, rgba(46, 224, 194, .32), transparent 46%); }
+.bonus-option-horsemen::before { background: radial-gradient(circle at 50% 20%, rgba(232, 117, 47, .33), transparent 46%); }
+.bonus-option-normal::before { background: radial-gradient(circle at 50% 20%, rgba(80, 181, 95, .32), transparent 46%); }
+.bonus-option-super::before { background: radial-gradient(circle at 50% 20%, rgba(118, 95, 255, .34), transparent 46%); }
+
+.bonus-option.is-active {
+  border-color: #ffd26f;
+  box-shadow: 0 0 0 2px rgba(255,210,111,.16), 0 0 24px rgba(255,183,54,.22);
+}
+
+.bonus-option > * {
+  position: relative;
+  z-index: 1;
+}
+
+.bonus-option-tag {
+  color: #bba77c;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .12em;
+}
+
+.bonus-option h3 {
+  min-height: 50px;
+  margin: 9px 0 8px;
+  color: #f4ead8;
+  font-family: Georgia, "Noto Serif TC", serif;
+  font-size: 19px;
+  line-height: 1.25;
+}
+
+.bonus-option p {
+  flex: 1 1 auto;
+  margin: 0;
+  color: #b5aca0;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.bonus-option dl {
+  display: grid;
+  gap: 5px;
+  margin: 14px 0 12px;
+}
+
+.bonus-option dl div {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  min-height: 24px;
+  padding-top: 5px;
+  border-top: 1px solid rgba(255,255,255,.06);
+  font-size: 10px;
+}
+
+.bonus-option dt { color: #7f766c; }
+.bonus-option dd { margin: 0; color: #ded1bc; }
+
+.bonus-option-price-row {
+  min-height: 34px !important;
+  margin-top: 2px;
+  padding-top: 7px !important;
+}
+
+.bonus-option-price-row dd {
+  justify-self: end;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  color: #fff0c4 !important;
+  font-size: clamp(11px, 1.35vw, 14px);
+  font-weight: 900;
+  letter-spacing: -.015em;
+  line-height: 1;
+  text-align: right;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-variant-numeric: tabular-nums;
+}
+
+.bonus-option-action {
+  width: calc(100% + 32px);
+  min-height: 52px;
+  margin: 0 -16px;
+  border: 0;
+  background: linear-gradient(180deg, #ff8c31, #ec5318);
+  color: #fff;
+  font-size: 17px;
+  font-weight: 900;
+  letter-spacing: .04em;
+}
+
+.bonus-option-action.is-buy {
+  background: linear-gradient(180deg, #5dcc67, #2e9e45);
+}
+
+.bonus-option-action.is-disable {
+  background: linear-gradient(180deg, #6c6268, #3b353a);
+}
+
+.bonus-option-action:disabled {
+  opacity: .45;
+}
+
+.bonus-buy-note {
+  margin: -2px 18px 18px;
+  color: #7d746a;
+  font-size: 10px;
+  text-align: center;
+}
+
+/* Full game manual */
+.rules-manual-panel {
+  width: min(96vw, 1040px);
+  max-height: 94dvh;
+  background:
+    radial-gradient(circle at 50% 0, rgba(52, 43, 34, .18), transparent 28%),
+    linear-gradient(180deg, #101012, #050506 75%);
+}
+
+.rules-manual-header {
+  align-items: center;
+}
+
+.rules-header-copy {
+  margin: 5px 0 0;
+  color: #8e877d;
+  font-size: 11px;
+}
+
+.rules-jump-nav {
+  position: sticky;
+  z-index: 3;
+  top: 78px;
+  display: flex;
+  gap: 7px;
+  padding: 9px 18px;
+  overflow-x: auto;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+  background: rgba(10,10,12,.94);
+  backdrop-filter: blur(10px);
+  scrollbar-width: thin;
+}
+
+.rules-jump-nav a {
+  flex: 0 0 auto;
+  padding: 7px 11px;
+  border: 1px solid rgba(255,255,255,.09);
+  border-radius: 999px;
+  color: #c7bba7;
+  font-size: 10px;
+  text-decoration: none;
+}
+
+.rules-jump-nav a:hover {
+  border-color: rgba(78, 235, 205, .55);
+  color: #55e8ca;
+}
+
+.rules-manual-content {
+  display: grid;
+  gap: 14px;
+  padding: 16px 18px 24px;
+}
+
+.rules-manual-content > .rule-manual-section {
+  scroll-margin-top: 130px;
+  padding: 20px;
+  border: 1px solid rgba(255,255,255,.075);
+  border-radius: 14px;
+  background: linear-gradient(180deg, rgba(25,24,27,.9), rgba(10,10,12,.96));
+}
+
+.rules-section-kicker {
+  margin: 0 0 4px;
+  color: #45e2c1;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .13em;
+}
+
+.rule-manual-section h3 {
+  margin: 0 0 12px;
+  color: #f2eee6;
+  font-size: 22px;
+}
+
+.rule-manual-section > p:not(.rules-section-kicker),
+.rule-manual-section li {
+  color: #c6bfb5;
+  font-size: 13px;
+  line-height: 1.65;
+}
+
+.rule-mode-grid,
+.rules-buy-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.rule-mode-grid article,
+.rules-buy-grid article {
+  padding: 14px;
+  border: 1px solid rgba(255,255,255,.075);
+  border-radius: 11px;
+  background: rgba(255,255,255,.025);
+}
+
+.rule-mode-grid article > span {
+  color: #d6ad61;
+  font-size: 9px;
+  font-weight: 900;
+  letter-spacing: .1em;
+}
+
+.rule-mode-grid h4 {
+  margin: 6px 0 7px;
+  color: #f5ead4;
+  font-size: 17px;
+}
+
+.rule-mode-grid p,
+.rules-buy-grid p {
+  margin: 0;
+  color: #ada69c;
+  font-size: 11px;
+  line-height: 1.55;
+}
+
+.rules-highlight,
+.rules-retrigger,
+.rules-note {
+  margin-top: 12px;
+  padding: 11px 13px;
+  border-left: 3px solid #e1b95d;
+  border-radius: 5px;
+  background: rgba(198, 148, 53, .1);
+  color: #e6d8ba;
+  font-size: 12px;
+  line-height: 1.55;
+}
+
+.rule-fact-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.rule-fact-grid div {
+  padding: 12px 8px;
+  border-radius: 10px;
+  background: #0a1515;
+  text-align: center;
+}
+
+.rule-fact-grid strong,
+.rule-fact-grid span {
+  display: block;
+}
+
+.rule-fact-grid strong {
+  color: #51e6c6;
+  font-size: 21px;
+}
+
+.rule-fact-grid span {
+  margin-top: 3px;
+  color: #a7a39c;
+  font-size: 9px;
+}
+
+.rules-payline-grid {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.rules-payline-card {
+  position: relative;
+  margin: 0;
+  padding: 5px;
+  border: 1px solid rgba(255,255,255,.08);
+  border-radius: 8px;
+  background: #060708;
+}
+
+.rules-payline-card svg {
+  display: block;
+  width: 100%;
+  aspect-ratio: 6 / 5;
+}
+
+.rules-payline-card figcaption {
+  position: absolute;
+  right: 5px;
+  bottom: 3px;
+  color: rgba(255,255,255,.46);
+  font-size: 8px;
+}
+
+.rules-payline-gridline {
+  stroke: rgba(255,255,255,.18);
+  stroke-width: 1;
+}
+
+.rules-payline-path {
+  fill: none;
+  stroke: #51d96b;
+  stroke-width: 9;
+  stroke-linecap: square;
+  stroke-linejoin: round;
+  opacity: .84;
+}
+
+.wild-rule-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 9px;
+}
+
+.wild-rule-card {
+  display: grid;
+  grid-template-columns: 64px 1fr;
+  align-items: center;
+  gap: 9px;
+  padding: 9px;
+  border: 1px solid currentColor;
+  border-radius: 10px;
+  background: rgba(255,255,255,.025);
+}
+
+.wild-rule-card img {
+  width: 60px;
+  aspect-ratio: 1;
+  object-fit: contain;
+}
+
+.wild-rule-card strong,
+.wild-rule-card span,
+.wild-rule-card small {
+  display: block;
+}
+
+.wild-rule-card strong { color: #f4ead8; font-size: 14px; }
+.wild-rule-card span { margin-top: 4px; color: #aaa199; font-size: 10px; }
+.wild-rule-card small { margin-top: 5px; color: currentColor; font-size: 10px; line-height: 1.4; }
+.wild-rule-card.color-blue { color: #68a4ff; }
+.wild-rule-card.color-red { color: #ee7771; }
+.wild-rule-card.color-gold { color: #e9bd55; }
+.wild-rule-card.color-green { color: #69c985; }
+
+.rule-step-list {
+  display: grid;
+  gap: 5px;
+  margin: 14px 0 0;
+  padding-left: 21px;
+}
+
+.scatter-rule-row {
+  display: grid;
+  grid-template-columns: 110px 1fr 1fr;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.scatter-rule-row img {
+  width: 100px;
+  height: 100px;
+  object-fit: contain;
+}
+
+.scatter-rule-row > div {
+  padding: 12px;
+  border-radius: 10px;
+  background: rgba(255, 163, 48, .08);
+}
+
+.scatter-rule-row strong,
+.scatter-rule-row span {
+  display: block;
+}
+.scatter-rule-row strong { color: #f5c770; }
+.scatter-rule-row span { margin-top: 5px; color: #b8afa3; font-size: 11px; line-height: 1.4; }
+
+.rule-compare-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #c8c0b5;
+  font-size: 11px;
+}
+
+.rule-compare-table th,
+.rule-compare-table td {
+  padding: 9px 10px;
+  border: 1px solid rgba(255,255,255,.08);
+  text-align: left;
+}
+
+.rule-compare-table th {
+  color: #55e4c6;
+  background: #0b1515;
+}
+
+.collection-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.collection-flow > div {
+  padding: 12px;
+  border: 1px solid rgba(255,255,255,.07);
+  border-radius: 10px;
+  background: rgba(255,255,255,.025);
+}
+
+.collection-flow b {
+  display: grid;
+  width: 27px;
+  height: 27px;
+  place-items: center;
+  border-radius: 50%;
+  background: #8d662d;
+  color: #fff3d1;
+}
+
+.collection-flow strong,
+.collection-flow span {
+  display: block;
+}
+.collection-flow strong { margin-top: 9px; color: #eee1c9; font-size: 13px; }
+.collection-flow span { margin-top: 5px; color: #9e968c; font-size: 10px; line-height: 1.45; }
+
+.rules-buy-grid {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.rules-buy-grid strong,
+.rules-buy-grid span {
+  display: block;
+}
+.rules-buy-grid strong { color: #f4ead6; font-size: 14px; }
+.rules-buy-grid span { margin: 6px 0; color: #f1bb5b; font-size: 10px; }
+
+.rules-paytable {
+  display: grid;
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+  gap: 9px;
+  margin-top: 14px;
+}
+
+.rules-pay-symbol {
+  display: grid;
+  grid-template-columns: 1fr;
+  justify-items: center;
+  padding: 10px 7px;
+  border: 1px solid rgba(255,255,255,.075);
+  border-radius: 10px;
+  background: #07080a;
+}
+
+.rules-pay-symbol img {
+  width: 76px;
+  height: 76px;
+  object-fit: contain;
+}
+
+.rules-pay-symbol > strong {
+  color: #ddd5c9;
+  font-size: 12px;
+}
+
+.rules-pay-symbol > div {
+  width: 100%;
+  margin-top: 7px;
+}
+
+.rules-pay-symbol span {
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  font-size: 10px;
+  line-height: 1.6;
+}
+
+.rules-pay-symbol b { color: #4ce4c4; }
+.rules-pay-symbol em { min-width: 37px; color: #eee8de; font-style: normal; text-align: right; }
+
+.rules-system-section ul {
+  margin-bottom: 0;
+}
+
+@media (max-width: 860px) {
+  .bonus-buy-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+  .bonus-option { min-height: 300px; }
+  .rules-buy-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .wild-rule-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .collection-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rules-paytable { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+}
+
+@media (max-width: 620px) {
+  .board-chest-button {
+    top: -45px;
+    right: 4px;
+    width: 58px !important;
+    height: 54px !important;
+  }
+  .feature-actions-two { gap: 7px; }
+  .bonus-buy-panel,
+  .rules-manual-panel { width: 98vw; }
+  .bonus-buy-grid { grid-template-columns: 1fr; padding-inline: 12px; }
+  .bonus-option { min-height: 268px; }
+  .bonus-buy-betbar { grid-template-columns: 46px minmax(130px, 220px) 46px; }
+  .rules-manual-content { padding: 10px; }
+  .rules-manual-content > .rule-manual-section { padding: 14px; }
+  .rules-jump-nav { top: 72px; padding-inline: 10px; }
+  .rule-mode-grid { grid-template-columns: 1fr; }
+  .rule-fact-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rules-payline-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .wild-rule-grid { grid-template-columns: 1fr; }
+  .scatter-rule-row { grid-template-columns: 78px 1fr; }
+  .scatter-rule-row img { width: 72px; height: 72px; grid-row: span 2; }
+  .collection-flow,
+  .rules-buy-grid { grid-template-columns: 1fr; }
+  .rules-paytable { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .rule-compare-table { font-size: 9px; }
+  .rule-compare-table th,
+  .rule-compare-table td { padding: 7px 5px; }
+}

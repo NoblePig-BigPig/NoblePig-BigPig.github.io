@@ -1,0 +1,373 @@
+/* ===== V53.3: floating activity bubbles + detachable debug console ===== */
+.activity-feed {
+  position: fixed;
+  z-index: 760;
+  top: max(76px, calc(env(safe-area-inset-top) + 64px));
+  left: 50%;
+  width: min(70vw, 680px);
+  height: 112px;
+  transform: translateX(-50%);
+  pointer-events: none;
+  contain: layout paint style;
+}
+
+.activity-feed-stack {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.activity-bubble {
+  --activity-depth-y: 0px;
+  --activity-depth-scale: 1;
+  --activity-depth-opacity: 1;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  min-height: 58px;
+  box-sizing: border-box;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 12px;
+  padding: 11px 16px 11px 12px;
+  overflow: hidden;
+  border: 1px solid rgba(224, 188, 111, .48);
+  border-radius: 16px;
+  background:
+    linear-gradient(135deg, rgba(48, 39, 35, .96), rgba(9, 8, 11, .96) 72%),
+    radial-gradient(circle at 12% 18%, rgba(255, 222, 151, .16), transparent 38%);
+  box-shadow:
+    0 12px 30px rgba(0, 0, 0, .44),
+    inset 0 1px 0 rgba(255, 255, 255, .07),
+    inset 0 0 24px rgba(231, 183, 91, .045);
+  opacity: 0;
+  transform: translateY(calc(var(--activity-depth-y) - 14px)) scale(var(--activity-depth-scale));
+  transform-origin: top center;
+  transition:
+    transform 280ms cubic-bezier(.2, .82, .24, 1),
+    opacity 220ms ease,
+    filter 240ms ease;
+  will-change: transform, opacity;
+}
+
+.activity-bubble[data-depth="1"] {
+  --activity-depth-y: 13px;
+  --activity-depth-scale: .982;
+  --activity-depth-opacity: .77;
+  filter: brightness(.86);
+}
+
+.activity-bubble[data-depth="2"] {
+  --activity-depth-y: 26px;
+  --activity-depth-scale: .964;
+  --activity-depth-opacity: .5;
+  filter: brightness(.7);
+}
+
+.activity-bubble.is-visible {
+  opacity: var(--activity-depth-opacity);
+  transform: translateY(var(--activity-depth-y)) scale(var(--activity-depth-scale));
+}
+
+.activity-bubble.is-leaving {
+  opacity: 0 !important;
+  transform: translateY(calc(var(--activity-depth-y) + 18px)) scale(.95) !important;
+}
+
+.activity-bubble-badge {
+  display: inline-grid;
+  place-items: center;
+  min-width: 56px;
+  height: 32px;
+  padding: 0 10px;
+  border: 1px solid rgba(255, 229, 169, .32);
+  border-radius: 999px;
+  background: rgba(5, 5, 7, .7);
+  color: #f3d99e;
+  font-size: 11px;
+  font-weight: 900;
+  letter-spacing: .12em;
+  white-space: nowrap;
+  text-shadow: 0 2px 8px rgba(0, 0, 0, .9);
+}
+
+.activity-bubble-viewport {
+  min-width: 0;
+  overflow: hidden;
+  color: #efe6d7;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 1.35;
+  white-space: nowrap;
+  mask-image: linear-gradient(90deg, transparent 0, #000 3%, #000 94%, transparent 100%);
+}
+
+.activity-bubble-track {
+  display: block;
+  width: max-content;
+  min-width: 100%;
+}
+
+.activity-bubble-text {
+  display: inline-block;
+  min-width: 100%;
+  padding-right: 36px;
+}
+
+.activity-bubble.has-marquee .activity-bubble-track {
+  display: inline-flex;
+  min-width: max-content;
+  animation: activityMarquee var(--activity-marquee-duration, 10s) linear 900ms infinite;
+}
+
+.activity-bubble.has-marquee:hover .activity-bubble-track {
+  animation-play-state: paused;
+}
+
+.activity-bubble.is-big-win {
+  border-color: rgba(255, 209, 91, .8);
+  background:
+    linear-gradient(135deg, rgba(82, 48, 10, .97), rgba(19, 10, 4, .97) 74%),
+    radial-gradient(circle at 14% 20%, rgba(255, 219, 99, .34), transparent 42%);
+  box-shadow: 0 13px 34px rgba(0, 0, 0, .5), 0 0 24px rgba(255, 184, 52, .17);
+}
+
+.activity-bubble.is-big-win .activity-bubble-badge,
+.activity-bubble.is-max-win .activity-bubble-badge {
+  color: #fff3b8;
+  border-color: rgba(255, 229, 133, .62);
+  background: linear-gradient(180deg, rgba(133, 83, 13, .86), rgba(46, 26, 5, .86));
+}
+
+.activity-bubble.is-max-win {
+  border-color: rgba(255, 222, 105, .92);
+  background:
+    linear-gradient(135deg, rgba(104, 61, 9, .98), rgba(24, 12, 2, .98) 70%),
+    radial-gradient(circle at 15% 16%, rgba(255, 235, 142, .42), transparent 44%);
+  box-shadow: 0 14px 38px rgba(0, 0, 0, .56), 0 0 30px rgba(255, 197, 61, .25);
+}
+
+.activity-bubble.is-bonus {
+  border-color: rgba(137, 194, 255, .66);
+  background: linear-gradient(135deg, rgba(27, 47, 67, .97), rgba(8, 9, 15, .97) 72%);
+}
+
+@keyframes activityMarquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(calc(-50% - 18px)); }
+}
+
+.debug-toggle {
+  position: fixed;
+  z-index: 880;
+  right: max(16px, env(safe-area-inset-right));
+  bottom: max(16px, env(safe-area-inset-bottom));
+  width: 52px;
+  height: 52px;
+  padding: 0;
+  border: 1px solid rgba(230, 191, 111, .56);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 38% 30%, rgba(255,255,255,.1), transparent 34%),
+    linear-gradient(180deg, rgba(54, 43, 38, .98), rgba(13, 11, 15, .98));
+  color: #e8cc92;
+  box-shadow: 0 8px 25px rgba(0,0,0,.48), inset 0 0 0 2px rgba(0,0,0,.4);
+  cursor: pointer;
+  font: 900 10px/1 system-ui, sans-serif;
+  letter-spacing: .08em;
+}
+
+.debug-toggle:hover,
+.debug-toggle[aria-expanded="true"] {
+  border-color: rgba(255, 220, 143, .88);
+  color: #fff0bd;
+  box-shadow: 0 8px 28px rgba(0,0,0,.54), 0 0 20px rgba(228, 174, 71, .18), inset 0 0 0 2px rgba(0,0,0,.4);
+}
+
+.debug-overlay {
+  position: fixed;
+  z-index: 980;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: max(18px, env(safe-area-inset-top)) max(16px, env(safe-area-inset-right)) max(18px, env(safe-area-inset-bottom)) max(16px, env(safe-area-inset-left));
+}
+
+.debug-overlay[hidden] {
+  display: none !important;
+}
+
+.debug-overlay-backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  background: rgba(0, 0, 0, .72);
+  backdrop-filter: blur(8px);
+}
+
+.debug-drawer {
+  position: relative;
+  width: min(760px, 94vw);
+  max-height: min(78dvh, 720px);
+  box-sizing: border-box;
+  overflow: auto;
+  border: 1px solid rgba(225, 188, 111, .48);
+  border-radius: 18px;
+  background: linear-gradient(180deg, rgba(29, 24, 28, .99), rgba(8, 7, 10, .995));
+  box-shadow: 0 24px 80px rgba(0,0,0,.72), inset 0 1px 0 rgba(255,255,255,.055);
+  color: #d9cdbd;
+}
+
+.debug-drawer-header {
+  position: sticky;
+  z-index: 2;
+  top: 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  padding: 18px 20px 14px;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+  background: rgba(20, 17, 21, .97);
+  backdrop-filter: blur(10px);
+}
+
+.debug-drawer-header small {
+  display: block;
+  margin-bottom: 4px;
+  color: #b9904d;
+  font-size: 10px;
+  font-weight: 900;
+  letter-spacing: .18em;
+}
+
+.debug-drawer-header h2 {
+  margin: 0;
+  color: #f3e5ca;
+  font-size: clamp(20px, 3vw, 28px);
+}
+
+.debug-close {
+  flex: 0 0 auto;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(255,255,255,.12);
+  border-radius: 50%;
+  background: #28232a;
+  color: #ded2c4;
+  cursor: pointer;
+  font-size: 27px;
+  line-height: 1;
+}
+
+.debug-drawer-description {
+  margin: 0;
+  padding: 14px 20px 0;
+  color: #9e9388;
+  font-size: 13px;
+  line-height: 1.55;
+}
+
+.debug-drawer .debug-actions {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  padding: 16px 20px 22px;
+}
+
+.debug-drawer .debug-actions button {
+  min-height: 46px;
+  padding: 10px 12px;
+  border: 1px solid rgba(220, 187, 124, .18);
+  border-radius: 10px;
+  background: linear-gradient(180deg, #29242b, #151318);
+  color: #d7c8b4;
+  cursor: pointer;
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.3;
+}
+
+.debug-drawer .debug-actions button:hover {
+  border-color: rgba(238, 201, 127, .55);
+  color: #f6e7cb;
+  transform: translateY(-1px);
+}
+
+.app.is-landscape .activity-feed {
+  top: auto;
+  right: auto;
+  bottom: max(14px, env(safe-area-inset-bottom));
+  left: max(14px, env(safe-area-inset-left));
+  width: min(218px, 30vw);
+  height: 118px;
+  transform: none;
+}
+
+.app.is-landscape .activity-bubble {
+  min-height: 48px;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 7px;
+  padding: 8px 10px 8px 8px;
+  border-radius: 12px;
+}
+
+.app.is-landscape .activity-bubble-badge {
+  min-width: 42px;
+  height: 26px;
+  padding-inline: 7px;
+  font-size: 8px;
+}
+
+.app.is-landscape .activity-bubble-viewport {
+  font-size: 10px;
+}
+
+.app.is-landscape .debug-toggle {
+  top: max(12px, env(safe-area-inset-top));
+  right: max(12px, env(safe-area-inset-right));
+  bottom: auto;
+  width: 42px;
+  height: 42px;
+  font-size: 8px;
+}
+
+@media (max-width: 620px) {
+  .activity-feed {
+    width: min(calc(100vw - 42px), 620px);
+  }
+
+  .activity-bubble {
+    gap: 8px;
+    padding-inline: 9px 12px;
+  }
+
+  .activity-bubble-badge {
+    min-width: 48px;
+    height: 29px;
+    padding-inline: 8px;
+    font-size: 9px;
+  }
+
+  .activity-bubble-viewport {
+    font-size: 13px;
+  }
+
+  .debug-drawer .debug-actions {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .activity-bubble,
+  .debug-drawer .debug-actions button {
+    transition: none !important;
+  }
+  .activity-bubble.has-marquee .activity-bubble-track {
+    animation: none !important;
+  }
+}

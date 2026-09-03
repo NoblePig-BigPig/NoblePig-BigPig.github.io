@@ -1,0 +1,46 @@
+{
+  "id": "green-wild-win-generated",
+  "frameWidth": 160,
+  "frameHeight": 800,
+  "columns": 4,
+  "rows": 2,
+  "framesPerSheet": 8,
+  "frameCount": 64,
+  "fps": 60,
+  "loop": true,
+  "fullCard": true,
+  "sheets": [
+    {
+      "src": "./assets/animations/green-wild-win-generated/green-wild-win-generated-00.webp?v=80",
+      "frames": 8
+    },
+    {
+      "src": "./assets/animations/green-wild-win-generated/green-wild-win-generated-01.webp?v=80",
+      "frames": 8
+    },
+    {
+      "src": "./assets/animations/green-wild-win-generated/green-wild-win-generated-02.webp?v=80",
+      "frames": 8
+    },
+    {
+      "src": "./assets/animations/green-wild-win-generated/green-wild-win-generated-03.webp?v=80",
+      "frames": 8
+    },
+    {
+      "src": "./assets/animations/green-wild-win-generated/green-wild-win-generated-04.webp?v=80",
+      "frames": 8
+    },
+    {
+      "src": "./assets/animations/green-wild-win-generated/green-wild-win-generated-05.webp?v=80",
+      "frames": 8
+    },
+    {
+      "src": "./assets/animations/green-wild-win-generated/green-wild-win-generated-06.webp?v=80",
+      "frames": 8
+    },
+    {
+      "src": "./assets/animations/green-wild-win-generated/green-wild-win-generated-07.webp?v=80",
+      "frames": 8
+    }
+  ]
+}

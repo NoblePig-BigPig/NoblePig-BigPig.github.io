@@ -1,0 +1,281 @@
+/* V3 art integration */
+body {
+  background: #05070a url('../assets/backgrounds/mainBG.png') center top / min(100vw, 941px) auto no-repeat fixed;
+}
+body.is-free-mode {
+  background-image: url('../assets/backgrounds/freeBG.png');
+}
+.game-shell {
+  background: linear-gradient(180deg, rgba(2,4,7,.18), rgba(3,4,7,.72) 72%, #050507 100%);
+  backdrop-filter: none;
+}
+.hero-stage { display: none; }
+.topbar { margin-top: 4px; }
+.board-frame { margin-top: clamp(120px, 32vh, 310px); }
+
+.slot-cell {
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: rgba(2, 3, 5, .64);
+  box-shadow: inset 0 0 12px rgba(0,0,0,.7);
+}
+.slot-cell::after { box-shadow: inset 0 0 13px rgba(0,0,0,.62); }
+.symbol-image {
+  display: block;
+  width: 88%;
+  height: 88%;
+  object-fit: contain;
+  object-position: center center;
+  transform: translateY(-1.5%);
+  pointer-events: none;
+  user-select: none;
+  -webkit-user-drag: none;
+}
+.slot-cell.symbol-WILD,
+.slot-cell.symbol-SCATTER { border: 0; background: rgba(4,5,8,.86); }
+.slot-cell.symbol-WILD .symbol-image,
+.slot-cell.symbol-SCATTER .symbol-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: none;
+}
+.big-wild-card {
+  inset: 0;
+  z-index: 12;
+  padding: 0;
+  border: 0;
+  border-radius: 0;
+  background: #020306;
+  box-shadow: 0 0 24px currentColor;
+}
+.big-wild-card::before, .big-wild-card::after { display: none; }
+.big-wild-card > .symbol-image { width: 100%; height: 100%; object-fit: cover; }
+.sticky-badge {
+  position: absolute; right: 4px; top: 4px; z-index: 4;
+  padding: 2px 4px; border-radius: 3px; background: rgba(0,0,0,.72);
+  color: #fff1b8; font-size: 7px; font-weight: 900;
+}
+.big-wild-card.is-new { animation: wildDropDown 760ms cubic-bezier(.18,.78,.18,1) both; transform-origin: top center; }
+@keyframes wildDropDown {
+  0% { transform: translateY(-104%); filter: brightness(2) blur(2px); }
+  72% { transform: translateY(2.5%); filter: brightness(1.35) blur(0); }
+  100% { transform: translateY(0); filter: none; }
+}
+.reel.is-wild-charging { z-index: 5; overflow: visible; }
+.reel.is-wild-charging::after {
+  content: ''; position: absolute; z-index: 8; inset: -5px; pointer-events: none;
+  opacity: 0; animation: wildChargePulse 460ms ease-in-out infinite alternate;
+}
+.reel.charge-blue::after { background: linear-gradient(90deg, transparent, rgba(58,137,255,.62), transparent); box-shadow: 0 0 28px #2f8cff, inset 0 0 24px #2f8cff; }
+.reel.charge-red::after { background: linear-gradient(90deg, transparent, rgba(238,61,62,.62), transparent); box-shadow: 0 0 28px #f03c3c, inset 0 0 24px #f03c3c; }
+.reel.charge-gold::after { background: linear-gradient(90deg, transparent, rgba(255,198,37,.68), transparent); box-shadow: 0 0 30px #ffc52c, inset 0 0 26px #ffc52c; }
+.reel.charge-green::after { background: linear-gradient(90deg, transparent, rgba(49,197,104,.62), transparent); box-shadow: 0 0 28px #35c96d, inset 0 0 24px #35c96d; }
+@keyframes wildChargePulse { from { opacity:.38; transform:scaleX(.9); } to { opacity:1; transform:scaleX(1.08); } }
+
+.reel-spin-track,
+.reel-stop-track {
+  position: absolute;
+  z-index: 2;
+  top: 2px;
+  right: 2px;
+  left: 2px;
+  display: grid;
+  grid-auto-rows: var(--spin-cell-height);
+  gap: 2px;
+  will-change: transform, filter;
+}
+.reel-spin-track { transform: translate3d(0, var(--spin-start, 0px), 0); animation: none; }
+.reel.is-preparing .reel-spin-track { animation: reelPreNudge var(--pre-nudge-duration, 90ms) cubic-bezier(.25,.8,.4,1) both; }
+.reel.is-rolling .reel-spin-track { animation: reelSymbolsRollDown var(--spin-cycle-duration, 360ms) linear infinite; filter: blur(1.05px); }
+.reel-stop-track { transform: translate3d(0, var(--stop-start, 0px), 0); }
+.reel.is-stop-scrolling .reel-stop-track { animation: reelStopScroll var(--stop-duration, 240ms) cubic-bezier(.12,.62,.18,1) forwards; filter: blur(.65px); }
+.reel-spin-track .slot-cell,
+.reel-stop-track .slot-cell {
+  border-color: transparent;
+  background: transparent;
+  box-shadow: none;
+}
+.reel-spin-track .slot-cell::after,
+.reel-stop-track .slot-cell::after { display: none; }
+@keyframes reelPreNudge {
+  from { transform: translate3d(0, var(--spin-start, 0px), 0); }
+  to { transform: translate3d(0, calc(var(--spin-start, 0px) - 10px), 0); }
+}
+@keyframes reelSymbolsRollDown {
+  from { transform: translate3d(0, calc(var(--spin-start, 0px) - 10px), 0); }
+  to { transform: translate3d(0, var(--spin-end, 0px), 0); }
+}
+@keyframes reelStopScroll {
+  0% { transform: translate3d(0, var(--stop-start, 0px), 0); filter: blur(1px); }
+  78% { transform: translate3d(0, 3px, 0); filter: blur(.15px); }
+  100% { transform: translate3d(0, 0, 0); filter: none; }
+}
+
+/* The art already contains its own labels; do not render old duplicate captions. */
+.controls .round-button small,
+.controls .spin-button small { display: none !important; }
+.round-button.asset-control:not(.is-active) img { filter: grayscale(1) brightness(.58); opacity: .72; }
+#betMinusBtn img, #betPlusBtn img, #autoBtn img, #spinBtn img { filter: none; opacity: 1; }
+#speedBtn.is-active img {
+  filter: saturate(1.35) brightness(1.35) drop-shadow(0 0 7px #ffb020) drop-shadow(0 0 14px rgba(255,145,0,.9));
+  opacity: 1;
+}
+#speedBtn.is-active { filter: drop-shadow(0 0 10px rgba(255,151,24,.72)); }
+
+#autoBtn.is-stop-active:not(:disabled) {
+  filter: drop-shadow(0 0 10px rgba(255, 167, 35, .72));
+}
+#autoBtn.is-stop-active:not(:disabled) img {
+  filter: saturate(1.08) brightness(1.08) drop-shadow(0 0 8px rgba(255, 176, 52, .58));
+}
+#autoBtn.is-stop-locked,
+#autoBtn.is-catalog-locked {
+  cursor: not-allowed;
+}
+#autoBtn.is-stop-locked img,
+#autoBtn.is-catalog-locked img {
+  filter: grayscale(.45) brightness(.66) drop-shadow(0 6px 7px rgba(0, 0, 0, .62));
+  opacity: .72;
+}
+
+
+/* V6 wild / payline / button refinements */
+.payline-layer {
+  z-index: 40 !important;
+  pointer-events: none;
+}
+.big-wild-card {
+  background:
+    radial-gradient(circle at 50% 16%, rgba(255,255,255,.08), transparent 36%),
+    linear-gradient(180deg, rgba(8,9,12,.98), rgba(2,3,6,.98));
+  overflow: hidden;
+}
+.big-wild-card.big-wild-blue { color: #87b7ff; }
+.big-wild-card.big-wild-red { color: #ff8c7f; }
+.big-wild-card.big-wild-gold { color: #ffd26f; }
+.big-wild-card.big-wild-green { color: #77ef9d; }
+.big-wild-card > .symbol-image {
+  width: 100%;
+  height: 100%;
+  object-fit: fill;
+  object-position: center center;
+  padding: 0;
+  transform: none;
+  filter: drop-shadow(0 0 18px rgba(0,0,0,.55));
+}
+.slot-cell.symbol-WILD {
+  position: relative;
+  overflow: hidden;
+}
+.slot-cell.symbol-WILD .symbol-image {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center center;
+  padding: 3px;
+  filter: drop-shadow(0 0 10px rgba(0,0,0,.55));
+}
+.slot-cell.wild-blue { background: linear-gradient(180deg, rgba(20,32,56,.95), rgba(7,10,16,.98)); }
+.slot-cell.wild-red { background: linear-gradient(180deg, rgba(48,18,18,.95), rgba(10,5,6,.98)); }
+.slot-cell.wild-gold { background: linear-gradient(180deg, rgba(56,36,10,.95), rgba(14,9,4,.98)); }
+.slot-cell.wild-green { background: linear-gradient(180deg, rgba(14,36,22,.95), rgba(5,11,8,.98)); }
+.wild-multiplier-badge {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffe8ac;
+  text-shadow: 0 0 10px rgba(0,0,0,.88), 0 1px 0 rgba(0,0,0,.8), 0 0 14px rgba(255,186,73,.28);
+  font-weight: 900;
+  letter-spacing: .02em;
+  font-family: Georgia, "Times New Roman", serif;
+  pointer-events: none;
+}
+.wild-multiplier-small {
+  bottom: 3px;
+  min-width: 54%;
+  padding: 1px 5px 3px;
+  font-size: clamp(13px, 2.1vw, 18px);
+  line-height: 1;
+}
+.wild-multiplier-big {
+  bottom: 10px;
+  min-width: 54%;
+  padding: 4px 10px 6px;
+  font-size: clamp(26px, 3vw, 48px);
+  line-height: 1;
+  z-index: 3;
+}
+#buySuperBtn img {
+  width: 100%;
+  height: auto;
+  max-height: 52px;
+  object-fit: contain;
+}
+#buySuperBtn {
+  align-items: center;
+}
+#buySuperBtn small {
+  margin-top: 1px;
+}
+.debug-actions .debug-action-speed,
+.spin-buttons .speed-control,
+.spin-buttons .auto-quick-toggle,
+.auto-quick-toggle,
+.speed-control {
+  display: none !important;
+}
+
+
+/* V7: consistent reel speed and compact landing */
+.reel.is-settling {
+  animation: reelStopBounce var(--reel-settle-duration, 85ms) cubic-bezier(.2,.8,.3,1) both !important;
+}
+@keyframes reelStopBounce {
+  0% { transform: translateY(2.2%); filter: brightness(1.06); }
+  100% { transform: translateY(0); filter: none; }
+}
+
+
+/* V8 fixes: exact 5-row stop viewport + full-height wild art */
+.reel-spin-track,
+.reel-stop-track {
+  top: 2px;
+  right: 2px;
+  bottom: 2px;
+  left: 2px;
+  gap: var(--spin-gap, 2px);
+  align-content: start;
+}
+.reel-spin-track .slot-cell,
+.reel-stop-track .slot-cell {
+  min-height: var(--spin-cell-height);
+  height: var(--spin-cell-height);
+}
+.big-wild-card > .symbol-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  padding: 0;
+}
+.slot-cell.symbol-WILD .symbol-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  padding: 0;
+}
+.big-wild-card {
+  inset: 2px;
+}
+.big-wild-card .wild-multiplier-big {
+  bottom: 6px;
+}
+
+/* V52: remove sticky hint badge */
+.sticky-badge { display: none !important; }
